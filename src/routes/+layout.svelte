@@ -77,15 +77,7 @@
 			</div>
 		</div>
 		<main class="flex-1 overflow-y-auto md:pt-4 pt-4 px-6 bg-base-200">
-			<div class="hero h-4/5 bg-base-200">
-				<div class="hero-content text-accent text-center">
-					<div class="max-w-md">
-						<FaceFrownIcon class="h-48 w-48 inline-block" />
-						<h1 class="text-5xl font-bold">404 - Not Found</h1>
-					</div>
-				</div>
-			</div>
-			<div class="h-16"></div>
+			<slot />
 		</main>
 	</div>
 	<div class="drawer-side z-30">
@@ -159,7 +151,7 @@
 					<div class=" w-full">
 						<ul class="menu menu-compact">
 							<li>
-								<a href="/login"> <ArrowRightStartOnRectangleIcon class="h-5 w-5" /> Login </a>
+								<a href="/login"> <ArrowRightStartOnRectangleIcon class="h-5 w-5" />Login</a>
 							</li>
 							<li>
 								<a href="/register"> <UserIcon class="h-5 w-5" /> Register</a>
@@ -171,7 +163,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="/app/blank"><DocumentIcon class="h-5 w-5" /> Blank Page </a>
+								<a href="/app/blank"><DocumentIcon class="h-5 w-5" />Blank Page</a>
 							</li>
 							<li>
 								<a href="/app/404"><ExclamationTriangleIcon class="h-5 w-5" />404</a>
@@ -231,5 +223,3 @@
 		</ul>
 	</div>
 </div>
-
-<slot />

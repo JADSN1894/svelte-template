@@ -1,6 +1,7 @@
-<script type="ts">
+<script lang="ts">
 	import '../app.css';
 	import Bars3Icon from '../icons/hero-icons/Bars3Icon.svelte';
+	import Bars4Icon from '../icons/hero-icons/Bars4Icon.svelte';
 	import SunIcon from '../icons/hero-icons/SunIcon.svelte';
 	import MoonIcon from '../icons/hero-icons/MoonIcon.svelte';
 	import BellIcon from '../icons/hero-icons/BellIcon.svelte';
@@ -25,6 +26,13 @@
 	import TableCellsIcon from '../icons/hero-icons/TableCellsIcon.svelte';
 	import Squares2x2Icon from '../icons/hero-icons/Squares2x2Icon.svelte';
 	import FaceFrownIcon from '../icons/hero-icons/FaceFrownIcon.svelte';
+	import XCircleIcon from '../icons/hero-icons/XCircleIcon.svelte';
+	import XMarkIcon from '../icons/hero-icons/XMarkIcon.svelte';
+
+	function closeSideBar() {
+		const element = document.getElementById('left-sidebar-drawer') as HTMLButtonElement;
+		element.click();
+	}
 </script>
 
 <div class="drawer lg:drawer-open">
@@ -32,22 +40,10 @@
 	<div class="drawer-content flex flex-col">
 		<div class="navbar sticky top-0 bg-base-100 z-10 shadow-md">
 			<div class="flex-1">
-				<label for="left-sidebar-drawer" class="btn btn-primary drawer-button lg:hidden"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						aria-hidden="true"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-						></path>
-					</svg>
+				<label for="left-sidebar-drawer" class="btn btn-primary drawer-button lg:hidden">
+					<Bars4Icon class="h-5 inline-block w-5" />
 				</label>
-				<h1 class="text-2xl font-semibold ml-2"></h1>
+				<span class="text-2xl font-semibold ml-2"></span>
 			</div>
 			<div class="flex-none">
 				<label class="swap">
@@ -96,19 +92,11 @@
 		<label for="left-sidebar-drawer" class="drawer-overlay"></label>
 		<ul class="menu pt-2 w-80 bg-base-100 min-h-full text-base-content">
 			<button
+				onclick={() => closeSideBar()}
 				class="btn btn-ghost bg-base-300 btn-circle z-50 top-0 right-0 mt-4 mr-2 absolute lg:hidden"
-				><svg
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke-width="1.5"
-					stroke="currentColor"
-					aria-hidden="true"
-					class="h-5 inline-block w-5"
-					><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"
-					></path></svg
-				></button
 			>
+				<XMarkIcon class="h-5 inline-block w-5" />
+			</button>
 			<li class="mb-2 font-semibold text-xl">
 				<a href="/app/welcome"
 					><img class="mask mask-squircle w-10" src="/logo192.png" alt="DashWind Logo" />DashWind</a

@@ -1,1 +1,9 @@
-<h1>Svelte template</h1>
+<script lang="ts"></script>
+
+<h1 class="text-3xl font-bold underline">Svelte template</h1>
+
+<style lang="postcss">
+	:global(html) {
+		background-color: theme(colors.gray.100);
+	}
+</style>

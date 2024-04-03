@@ -1,5 +1,6 @@
 # Clean
 clean:
+    @mv -v bun.lockb bk-bun.lockb
     @rm -rf .dfx node_modules package-lock.json 
     @npm cache clean target --force
 

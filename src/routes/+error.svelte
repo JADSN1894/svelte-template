@@ -1,4 +1,5 @@
 <script>
+	//* Icons
 	import FaceFrownIcon from '$icons/hero-icons/FaceFrownIcon.svelte';
 </script>
 

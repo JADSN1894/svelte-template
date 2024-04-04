@@ -2,6 +2,13 @@
 
 Svelte template
 
+## Inspirations
+
+1. [**daisyui-admin-dashboard-template**](https://github.com/robbins23/daisyui-admin-dashboard-template)
+
 ## Study later
 
-[**To reactively enable a custom state, which can then be consumed by any of its descendants in the DOM**](https://github.com/brandonmcconnell/tailwindcss-signals)
+1. [**tailwindcss-signals**](https://github.com/brandonmcconnell/tailwindcss-signals)
+1. [**Biome.js**](https://biomejs.dev/)
+1. [**svelte-hero-icons**](https://www.npmjs.com/package/svelte-hero-icons)
+1. [**rolldown**](https://rolldown.rs/)

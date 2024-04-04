@@ -40,7 +40,7 @@
 				</div>
 			</div>
 			<div class="py-24 px-10">
-				<h2 class="text-2xl font-semibold mb-2 text-center">Register</h2>
+				<h2 class="text-2xl font-semibold mb-2 text-center">{pageTitleState.pageTitle}</h2>
 				<form>
 					<div class="mb-4">
 						<div class="form-control w-full mt-4">

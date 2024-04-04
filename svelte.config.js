@@ -21,6 +21,9 @@ const config = {
 				strict: true
 			}
 		),
+		alias: {
+			'$icons': './src/icons'
+		}
 	}
 };
 

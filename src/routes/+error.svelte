@@ -1,5 +1,5 @@
 <script>
-	import FaceFrownIcon from '../icons/hero-icons/FaceFrownIcon.svelte';
+	import FaceFrownIcon from '$icons/hero-icons/FaceFrownIcon.svelte';
 </script>
 
 <div class="hero h-4/5 bg-base-200">

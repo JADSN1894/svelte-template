@@ -1,3 +1,10 @@
+<script lang="ts">
+	//* States
+	import { pageTitleState } from '$states/PageTitleState.svelte';
+
+	pageTitleState.pageTitle = 'Integrations';
+</script>
+
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 	<div class="card w-full p-6 bg-base-100 shadow-xl mt-2">
 		<div class="text-xl font-semibold">Slack</div>

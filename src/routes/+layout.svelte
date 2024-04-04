@@ -1,28 +1,34 @@
 <script lang="ts">
+	//* Style
 	import '../app.css';
+
+	//* Icons
 	import Bars4Icon from '$icons//hero-icons/Bars4Icon.svelte';
 	import SunIcon from '$icons//hero-icons/SunIcon.svelte';
 	import MoonIcon from '$icons//hero-icons/MoonIcon.svelte';
 	import BellIcon from '$icons//hero-icons/BellIcon.svelte';
 	import BoltIcon from '$icons//hero-icons/BoltIcon.svelte';
-	import InboxArrowDownIcon from '$icons//hero-icons/InboxArrowDownIcon.svelte';
-	import ChartBarIcon from '$icons//hero-icons/ChartBarIcon.svelte';
-	import CalendarDaysIcon from '$icons//hero-icons/CalendarDaysIcon.svelte';
-	import DocumentDuplicateIcon from '$icons//hero-icons/DocumentDuplicateIcon.svelte';
-	import ChevronDown from '$icons//hero-icons/ChevronDown.svelte';
-	import ArrowRightStartOnRectangleIcon from '$icons//hero-icons/ArrowRightStartOnRectangleIcon.svelte';
-	import UserIcon from '$icons//hero-icons/UserIcon.svelte';
-	import KeyIcon from '$icons//hero-icons/KeyIcon.svelte';
-	import DocumentIcon from '$icons//hero-icons/DocumentIcon.svelte';
-	import ExclamationTriangleIcon from '$icons//hero-icons/ExclamationTriangleIcon.svelte';
-	import Cog6ToothIcon from '$icons//hero-icons/Cog6ToothIcon.svelte';
-	import WalletIcon from '$icons//hero-icons/WalletIcon.svelte';
-	import UsersIcon from '$icons//hero-icons/UsersIcon.svelte';
-	import DocumentTextIcon from '$icons//hero-icons/DocumentTextIcon.svelte';
-	import CodeBracketSquareIcon from '$icons//hero-icons/CodeBracketSquareIcon.svelte';
-	import TableCellsIcon from '$icons//hero-icons/TableCellsIcon.svelte';
-	import Squares2x2Icon from '$icons//hero-icons/Squares2x2Icon.svelte';
-	import XMarkIcon from '$icons//hero-icons/XMarkIcon.svelte';
+	import InboxArrowDownIcon from '$icons/hero-icons/InboxArrowDownIcon.svelte';
+	import ChartBarIcon from '$icons/hero-icons/ChartBarIcon.svelte';
+	import CalendarDaysIcon from '$icons/hero-icons/CalendarDaysIcon.svelte';
+	import DocumentDuplicateIcon from '$icons/hero-icons/DocumentDuplicateIcon.svelte';
+	import ChevronDown from '$icons/hero-icons/ChevronDown.svelte';
+	import ArrowRightStartOnRectangleIcon from '$icons/hero-icons/ArrowRightStartOnRectangleIcon.svelte';
+	import UserIcon from '$icons/hero-icons/UserIcon.svelte';
+	import KeyIcon from '$icons/hero-icons/KeyIcon.svelte';
+	import DocumentIcon from '$icons/hero-icons/DocumentIcon.svelte';
+	import ExclamationTriangleIcon from '$icons/hero-icons/ExclamationTriangleIcon.svelte';
+	import Cog6ToothIcon from '$icons/hero-icons/Cog6ToothIcon.svelte';
+	import WalletIcon from '$icons/hero-icons/WalletIcon.svelte';
+	import UsersIcon from '$icons/hero-icons/UsersIcon.svelte';
+	import DocumentTextIcon from '$icons/hero-icons/DocumentTextIcon.svelte';
+	import CodeBracketSquareIcon from '$icons/hero-icons/CodeBracketSquareIcon.svelte';
+	import TableCellsIcon from '$icons/hero-icons/TableCellsIcon.svelte';
+	import Squares2x2Icon from '$icons/hero-icons/Squares2x2Icon.svelte';
+	import XMarkIcon from '$icons/hero-icons/XMarkIcon.svelte';
+
+	//*	  States
+	import { pageTitleState } from '$states/PageTitleState.svelte';
 
 	function closeSideBar() {
 		const element = document.getElementById('left-sidebar-drawer') as HTMLButtonElement;
@@ -38,7 +44,7 @@
 				<label for="left-sidebar-drawer" class="btn btn-primary drawer-button lg:hidden">
 					<Bars4Icon class="h-5 inline-block w-5" />
 				</label>
-				<span class="text-2xl font-semibold ml-2"></span>
+				<h1 class="text-2xl font-semibold ml-2">{pageTitleState.pageTitle}</h1>
 			</div>
 			<div class="flex-none">
 				<label class="swap">

@@ -1,5 +1,11 @@
 <script>
+	//* Icons
 	import FunelIcon from '$icons/hero-icons/FunelIcon.svelte';
+
+	//* States
+	import { pageTitleState } from '$states/PageTitleState.svelte';
+
+	pageTitleState.pageTitle = 'Transactions';
 </script>
 
 <div class="card w-full p-6 bg-base-100 shadow-xl mt-2">

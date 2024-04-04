@@ -5,4 +5,66 @@
 	pageTitleState.pageTitle = 'Settings';
 </script>
 
-<h1>SETTINGS PROFILE</h1>
+<div class="card w-full p-6 bg-base-100 shadow-xl mt-2">
+	<div class="text-xl font-semibold">Profile Settings</div>
+	<div class="divider mt-2"></div>
+	<div class="h-full w-full pb-6 bg-base-100">
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div class="form-control w-full undefined">
+				<span class="label"><span class="label-text text-base-content undefined">Name</span> </span>
+				<input type="text" class="input input-bordered w-full" value="Alex" />
+			</div>
+			<div class="form-control w-full undefined">
+				<span class="label">
+					<span class="label-text text-base-content undefined">Email Id</span>
+				</span>
+				<input type="text" class="input input-bordered w-full" value="alex@dashwind.com" />
+			</div>
+			<div class="form-control w-full undefined">
+				<span class="label">
+					<span class="label-text text-base-content undefined">Title</span>
+				</span>
+				<input type="text" class="input input-bordered w-full" value="UI/UX Designer" />
+			</div>
+			<div class="form-control w-full undefined">
+				<span class="label">
+					<span class="label-text text-base-content undefined">Place</span>
+				</span>
+				<input type="text" class="input input-bordered w-full" value="California" />
+			</div>
+			<div class="form-control w-full undefined">
+				<span class="label">
+					<span class="label-text text-base-content undefined">About</span>
+				</span>
+				<textarea class="textarea textarea-bordered w-full"
+					>Doing what I love, part time traveller
+				</textarea>
+			</div>
+		</div>
+		<div class="divider"></div>
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div class="form-control w-full undefined">
+				<span class="label">
+					<span class="label-text text-base-content undefined">Language</span>
+				</span>
+				<input type="text" class="input input-bordered w-full" value="English" />
+			</div>
+			<div class="form-control w-full undefined">
+				<span class="label">
+					<span class="label-text text-base-content undefined">Timezone</span>
+				</span>
+				<input type="text" class="input input-bordered w-full" value="IST" />
+			</div>
+			<div class="form-control w-full undefined">
+				<label class="label cursor-pointer">
+					<span class="label-text text-base-content undefined">Sync Data</span>
+					<input type="checkbox" class="toggle" checked={false} />
+				</label>
+			</div>
+		</div>
+		<div class="mt-16">
+			<button class="btn btn-primary float-right">Update</button>
+		</div>
+	</div>
+</div>
+<div class="h-16"></div>

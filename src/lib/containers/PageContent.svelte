@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PageContent from '../containers/PageContent.svelte';
+	import PageContent from './PageContent.svelte';
 </script>
 
 <div class="drawer lg:drawer-open">

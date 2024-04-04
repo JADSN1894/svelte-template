@@ -31,6 +31,7 @@
 	import { pageTitleState } from '$states/PageTitleState.svelte';
 
 	import { page } from '$app/stores';
+	import CurrencyDollarIcon from '$icons/hero-icons/CurrencyDollarIcon.svelte';
 
 	function closeSideBar() {
 		const element = document.getElementById('left-sidebar-drawer') as HTMLButtonElement;
@@ -102,13 +103,10 @@
 					<XMarkIcon class="h-5 inline-block w-5" />
 				</button>
 				<li class="mb-2 font-semibold text-xl">
-					<a href="/app/welcome"
-						><img
-							class="mask mask-squircle w-10"
-							src="/logo192.png"
-							alt="DashWind Logo"
-						/>DashWind</a
-					>
+					<a href="/app/welcome">
+						<img class="mask mask-squircle w-10" src="/logo192.png" alt="DashWind Logo" />
+						DashWind
+					</a>
 				</li>
 				<li>
 					<a class="font-normal" href="/app/dashboard">
@@ -118,27 +116,15 @@
 				</li>
 				<li>
 					<a class="font-normal" href="/app/leads">
-						<InboxArrowDownIcon class="w-6 h-6" />
+						<InboxArrowDownIcon class="w-5 h-5" />
 						Leads
 					</a>
 				</li>
 				<li>
-					<a class="font-normal" href="/app/transactions"
-						><svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							aria-hidden="true"
-							class="h-6 w-6"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-							></path></svg
-						> Transactions</a
-					>
+					<a class="font-normal" href="/app/transactions">
+						<CurrencyDollarIcon class="w-5 h-5" />
+						Transactions
+					</a>
 				</li>
 				<li>
 					<a class="font-normal" href="/app/charts">
@@ -147,12 +133,12 @@
 				</li>
 				<li>
 					<a class="font-normal" href="/app/integration">
-						<BoltIcon class="h-5 w-5 inline-block" /> Integration
+						<BoltIcon class="h-5 w-5 inline-block" />Integration
 					</a>
 				</li>
 				<li>
 					<a class="font-normal" href="/app/calendar">
-						<CalendarDaysIcon class="w-5 h-5" /> Calendar
+						<CalendarDaysIcon class="w-5 h-5" />Calendar
 					</a>
 				</li>
 				<li>

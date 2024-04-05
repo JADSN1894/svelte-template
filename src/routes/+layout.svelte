@@ -45,7 +45,7 @@
 	});
 </script>
 
-{#if currentRouterName === 'login' || currentRouterName === 'register' || currentRouterName === 'forgot-password'}
+{#if currentRouterName === 'login' || currentRouterName === 'register' || currentRouterName === 'forgot-password' || currentRouterName === ''}
 	<slot />
 {:else}
 	<div class="drawer lg:drawer-open">

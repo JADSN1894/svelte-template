@@ -22,9 +22,11 @@ const config = {
 			}
 		),
 		alias: {
+			'$root': './',
 			'$icons': './src/lib/icons',
 			'$containers': './src/lib/containers',
-			'$states': './src/lib/states'
+			'$states': './src/lib/states',
+			'$utils': './src/lib/utils'
 		}
 	}
 };

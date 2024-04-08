@@ -11,6 +11,7 @@
 	import InboxArrowDownIcon from '$icons/hero-icons/InboxArrowDownIcon.svelte';
 	import ChartBarIcon from '$icons/hero-icons/ChartBarIcon.svelte';
 	import CalendarDaysIcon from '$icons/hero-icons/CalendarDaysIcon.svelte';
+	import CurrencyDollarIcon from '$icons/hero-icons/CurrencyDollarIcon.svelte';
 	import DocumentDuplicateIcon from '$icons/hero-icons/DocumentDuplicateIcon.svelte';
 	import ChevronDown from '$icons/hero-icons/ChevronDown.svelte';
 	import ArrowRightStartOnRectangleIcon from '$icons/hero-icons/ArrowRightStartOnRectangleIcon.svelte';
@@ -30,8 +31,11 @@
 	//*	  States
 	import { pageTitleState } from '$states/PageTitleState.svelte';
 
+	//* Tailwind
+	import { TAILWIND_CONFIG } from '$lib/utils/tailwind';
+
+	//* Svelte
 	import { page } from '$app/stores';
-	import CurrencyDollarIcon from '$icons/hero-icons/CurrencyDollarIcon.svelte';
 
 	function closeSideBar() {
 		const element = document.getElementById('left-sidebar-drawer') as HTMLButtonElement;
@@ -39,6 +43,10 @@
 	}
 
 	let currentRouterName = $state('');
+
+	const theme = TAILWIND_CONFIG.daisyui.themes;
+	const lightThemeName = Object.keys(theme[0]).at(0)?.toString();
+	// const darkThemeName = Object.keys(theme[1]).at(0)?.toString();
 
 	$effect(() => {
 		currentRouterName = $page.url.pathname.slice(1);
@@ -59,11 +67,16 @@
 					<h1 class="text-2xl font-semibold ml-2">{pageTitleState.pageTitle}</h1>
 				</div>
 				<div class="flex-none">
-					<label class="swap">
-						<input type="checkbox" />
-						<SunIcon class="h-6 w-6 fill-current" />
-						<MoonIcon class="h-6 w-6 fill-current" />
+					<label class="swap swap-rotate">
+						<input
+							type="checkbox"
+							class="theme-controller bg-transparent border-transparent invisible"
+							value={lightThemeName}
+						/>
+						<SunIcon class="swap-off h-6 w-6 fill-current" />
+						<MoonIcon class="swap-on h-6 w-6 fill-current" />
 					</label>
+
 					<button class="btn btn-ghost ml-4 btn-circle">
 						<div class="indicator">
 							<BellIcon class="h-6 w-6 fill-current" />

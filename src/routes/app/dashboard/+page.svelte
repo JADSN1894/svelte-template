@@ -18,7 +18,125 @@
 	//* Utils
 	import { TAILWIND_CONFIG } from '$utils/tailwind.ts';
 
+	//* ChartJs
+	import Chart from 'chart.js/auto';
+
 	const colorSlate300 = TAILWIND_CONFIG.theme.colors.slate[300];
+
+	//* Montly Active Users (in k)
+	const MONTLY_ACTIVE_USERS_IN_K = 'canvas-dashboard-montly-active-users-in-k-graph';
+	$effect(() => {
+		const entrypointElement = document.getElementById(
+			MONTLY_ACTIVE_USERS_IN_K
+		)! as HTMLCanvasElement;
+
+		const options = {
+			responsive: true,
+			fill: true
+		};
+
+		const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+		new Chart(entrypointElement, {
+			type: 'line',
+			options: options,
+			data: {
+				labels: labels,
+				datasets: [
+					{
+						// fill: true,
+						label: 'MAU',
+						data: labels.map(() => {
+							return Math.random() * 100 + 500;
+						}),
+						borderColor: 'rgb(53, 162, 235)',
+						backgroundColor: 'rgba(53, 162, 235, 0.5)'
+					}
+				]
+			}
+		});
+	});
+
+	//* Revenue
+	const REVENUE_GRAPH_ID = 'canvas-dashboard-revenue-graph';
+	$effect(() => {
+		const entrypointElement = document.getElementById(REVENUE_GRAPH_ID)! as HTMLCanvasElement;
+
+		const options = {
+			responsive: true
+		};
+
+		const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+		new Chart(entrypointElement, {
+			type: 'bar',
+			options: options,
+			data: {
+				labels: labels,
+				datasets: [
+					{
+						label: 'Store 1',
+						data: labels.map(() => {
+							return Math.random() * 1000 + 500;
+						}),
+						backgroundColor: 'rgba(255, 99, 132, 1)'
+					},
+					{
+						label: 'Store 2',
+						data: labels.map(() => {
+							return Math.random() * 1000 + 500;
+						}),
+						backgroundColor: 'rgba(53, 162, 235, 1)'
+					}
+				]
+			}
+		});
+	});
+
+	//* Orders by category
+	const ORDERS_BY_CATEGORY_GRAPH_ID = 'canvas-dashboard-orders-by-category-graph';
+	$effect(() => {
+		const entrypointElement = document.getElementById(
+			ORDERS_BY_CATEGORY_GRAPH_ID
+		)! as HTMLCanvasElement;
+
+		const options = {
+			responsive: true
+		};
+
+		const labels = ['Electronics', 'Home Applicances', 'Beauty', 'Furniture', 'Watches', 'Apparel'];
+
+		new Chart(entrypointElement, {
+			type: 'doughnut',
+			options: options,
+			data: {
+				labels: labels,
+				datasets: [
+					{
+						label: '# of Orders',
+						data: [122, 219, 30, 51, 82, 13],
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.8)',
+							'rgba(54, 162, 235, 0.8)',
+							'rgba(255, 206, 86, 0.8)',
+							'rgba(75, 192, 192, 0.8)',
+							'rgba(153, 102, 255, 0.8)',
+							'rgba(255, 159, 64, 0.8)'
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)'
+						],
+						borderWidth: 1
+					}
+				]
+			}
+		});
+	});
 
 	pageTitleState.pageTitle = 'Dashboard';
 </script>
@@ -104,14 +222,14 @@
 		<div class="text-xl font-semibold">Montly Active Users (in K)</div>
 		<div class="divider mt-2"></div>
 		<div class="h-full w-full pb-6 bg-base-100">
-			<span class="text-warning text-2xl">GRAPHIC</span>
+			<canvas id={MONTLY_ACTIVE_USERS_IN_K}></canvas>
 		</div>
 	</div>
 	<div class="card w-full p-6 bg-base-100 shadow-xl mt-6">
 		<div class="text-xl font-semibold">Revenue</div>
 		<div class="divider mt-2"></div>
 		<div class="h-full w-full pb-6 bg-base-100">
-			<span class="text-warning text-2xl">GRAPHIC</span>
+			<canvas id={REVENUE_GRAPH_ID}></canvas>
 		</div>
 	</div>
 </div>
@@ -202,7 +320,9 @@
 		<div class="text-xl font-semibold">Orders by Category</div>
 		<div class="divider mt-2"></div>
 		<div class="h-full w-full pb-6 bg-base-100">
-			<span class="text-warning text-2xl">GRAPHIC</span>
+			<span class="text-warning text-2xl">
+				<canvas id={ORDERS_BY_CATEGORY_GRAPH_ID}></canvas>
+			</span>
 		</div>
 	</div>
 </div>

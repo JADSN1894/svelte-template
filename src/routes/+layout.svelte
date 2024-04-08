@@ -27,6 +27,7 @@
 	import TableCellsIcon from '$icons/hero-icons/TableCellsIcon.svelte';
 	import Squares2x2Icon from '$icons/hero-icons/Squares2x2Icon.svelte';
 	import XMarkIcon from '$icons/hero-icons/XMarkIcon.svelte';
+	import ChevronUp from '$icons/hero-icons/ChevronUp.svelte';
 
 	//*	  States
 	import { pageTitleState } from '$states/PageTitleState.svelte';
@@ -43,6 +44,11 @@
 	}
 
 	let currentRouterName = $state('');
+
+	//* Menu states
+	let isPageMenuExpanded = $state(false);
+	let isSettingsMenuExpanded = $state(false);
+	let isDocumentationMenuExpanded = $state(false);
 
 	const theme = TAILWIND_CONFIG.daisyui.themes;
 	const lightThemeName = Object.keys(theme[0]).at(0)?.toString();
@@ -156,14 +162,20 @@
 				</li>
 				<li>
 					<div class="flex flex-col">
-						<div class="w-full block">
-							<DocumentDuplicateIcon class="h-6 w-6 inline" />
-							Pages
+						<button
+							type="button"
+							class="w-full block"
+							onclick={() => (isPageMenuExpanded = !isPageMenuExpanded)}
+						>
+							<DocumentDuplicateIcon class="h-6 w-6 inline float-start" />
+							<span class="float-start ml-1">Pages</span>
+
 							<ChevronDown
-								class="w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all rotate-180"
+								class={`w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all ${isPageMenuExpanded ? 'rotate-180' : ''}`}
 							/>
-						</div>
-						<div class=" w-full">
+						</button>
+
+						<div hidden={isPageMenuExpanded} class="w-full">
 							<ul class="menu menu-compact">
 								<li>
 									<a href="/login"> <ArrowRightStartOnRectangleIcon class="h-5 w-5" />Login</a>
@@ -189,14 +201,21 @@
 				</li>
 				<li>
 					<div class="flex flex-col">
-						<div class="w-full block">
-							<Cog6ToothIcon class="h-6 w-6 inline" />
-							Settings
-							<ChevronDown
-								class="w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all rotate-180"
+						<button
+							type="button"
+							class="w-full block"
+							onclick={() => (isSettingsMenuExpanded = !isSettingsMenuExpanded)}
+						>
+							<Cog6ToothIcon
+								class={`h-6 w-6 inline float-start delay-400 duration-500 transition-all ${isSettingsMenuExpanded ? 'rotate-180' : ''}`}
 							/>
-						</div>
-						<div class=" w-full">
+							<span class="float-start ml-1">Settings</span>
+
+							<ChevronDown
+								class={`w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all ${isSettingsMenuExpanded ? 'rotate-180' : ''}`}
+							/>
+						</button>
+						<div hidden={isSettingsMenuExpanded} class=" w-full">
 							<ul class="menu menu-compact">
 								<li>
 									<a href="/app/settings-profile"><UserIcon class="h-5 w-5" />Profile</a>
@@ -213,12 +232,20 @@
 				</li>
 				<li>
 					<div class="flex flex-col">
-						<div class="w-full block">
-							<DocumentTextIcon class="w-6 h-6 inline" />
-							Documentation
-							<ChevronDown class="w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all" />
-						</div>
-						<div class=" w-full">
+						<button
+							type="button"
+							class="w-full block"
+							onclick={() => (isDocumentationMenuExpanded = !isDocumentationMenuExpanded)}
+						>
+							<DocumentTextIcon class="w-6 h-6 inline float-start" />
+
+							<span class="float-start ml-1">Documentation</span>
+
+							<ChevronDown
+								class={`w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all ${isDocumentationMenuExpanded ? 'rotate-180' : ''}`}
+							/>
+						</button>
+						<div hidden={isDocumentationMenuExpanded} class=" w-full">
 							<ul class="menu menu-compact">
 								<li>
 									<a href="/app/getting-started">

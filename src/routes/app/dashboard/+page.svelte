@@ -11,6 +11,12 @@
 	import ShareIcon from '$icons/hero-icons/ShareIcon.svelte';
 	import UserGroupIcon from '$icons/hero-icons/UserGroupIcon.svelte';
 	import UsersIcon from '$icons/hero-icons/UsersIcon.svelte';
+	import Datepicker from '$root/src/lib/components/ReactTailwindcssDatepicker/Datepicker.svelte';
+	import type {
+		ColorKeys,
+		DateLookingDatepickerType,
+		DateValueType
+	} from '$root/src/lib/components/ReactTailwindcssDatepicker/types';
 
 	//* States
 	import { pageTitleState } from '$states/PageTitleState.svelte';
@@ -20,6 +26,7 @@
 
 	//* ChartJs
 	import Chart from 'chart.js/auto';
+	import dayjs from 'dayjs';
 
 	const colorSlate300 = TAILWIND_CONFIG.theme.colors.slate[300];
 
@@ -138,12 +145,113 @@
 		});
 	});
 
+	//* DatePicker states
+	let value = $state<DateValueType>({
+		startDate: null,
+		endDate: null
+	});
+	let primaryColor = $state<ColorKeys>('blue');
+	let useRange = $state(true);
+	let showFooter = $state(false);
+	let showShortcuts = $state(false);
+	let asSingle = $state(false);
+	let placeholder = $state('');
+	let separator = $state('~');
+	let i18n = $state('en');
+	let disabled = $state(false);
+	let inputClassName = $state('');
+	let containerClassName = $state('');
+	let toggleClassName = $state('');
+	let displayFormat = $state('YYYY-MM-DD');
+	let readOnly = $state(false);
+	let minDate = $state(dayjs(new Date()).toDate());
+	let maxDate = $state(dayjs(new Date()).add(1, 'year').toDate());
+	let dateLooking = $state<DateLookingDatepickerType>('forward');
+	let disabledDates = $state([]);
+	let newDisabledDates = $state({ startDate: '', endDate: '' });
+	let startFrom = $state('2023-03-01');
+	let startWeekOn = $state('');
+
+	// const handleChange = (value, e: EventTarget) => {
+	// 	setValue(value);
+	// 	console.log(e);
+	// 	console.log('value', value);
+	// };
+
 	pageTitleState.pageTitle = 'Dashboard';
+
+	function handleChange(valueArg: DateValueType, e?: HTMLInputElement | null | undefined): void {
+		value = valueArg;
+		console.log(e);
+		console.log('valueArg', valueArg);
+		console.log('value', value);
+	}
 </script>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 	<div class="">
-		<div class="w-72"><span class="text-warning text-2xl">Calendar Component</span></div>
+		<div class="w-72">
+			<!-- <span class="text-warning text-2xl">Calendar Component</span> -->
+			<Datepicker
+				{value}
+				{primaryColor}
+				onChange={handleChange}
+				{useRange}
+				{showFooter}
+				{showShortcuts}
+				configs={{
+					shortcuts: {
+						today: 'TText',
+						yesterday: 'YText',
+						past: (period) => `P-${period} Text`,
+						currentMonth: 'CMText',
+						pastMonth: 'PMText',
+						last3Days: {
+							text: 'Last 3 days',
+							period: {
+								start: new Date(new Date().setDate(new Date().getDate() - 3)),
+								end: new Date()
+							}
+						},
+						thisDay: {
+							text: 'This Day',
+							period: {
+								start: new Date(),
+								end: new Date()
+							}
+						},
+						next8Days: {
+							text: 'Next 8 days',
+							period: {
+								start: new Date(),
+								end: new Date(new Date().setDate(new Date().getDate() + 8))
+							}
+						}
+					},
+					footer: {
+						cancel: 'CText',
+						apply: 'AText'
+					}
+				}}
+				{asSingle}
+				{placeholder}
+				{separator}
+				startFrom={startFrom.length && dayjs(startFrom).isValid() ? new Date(startFrom) : null}
+				{i18n}
+				{disabled}
+				{inputClassName}
+				{containerClassName}
+				{toggleClassName}
+				{displayFormat}
+				{readOnly}
+				{minDate}
+				{maxDate}
+				{dateLooking}
+				{disabledDates}
+				{startWeekOn}
+				popoverDirection={'down'}
+			/>
+		</div>
 	</div>
 	<div class="text-right">
 		<button class="btn btn-ghost btn-sm normal-case">

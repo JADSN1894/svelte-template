@@ -2,6 +2,7 @@
 	//* States
 	import { pageTitleState } from '$states/PageTitleState.svelte';
 
+	//* ChartJs
 	import Chart from 'chart.js/auto';
 
 	//* Sales

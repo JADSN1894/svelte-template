@@ -13,6 +13,11 @@ Svelte template
 1. [**svelte-hero-icons**](https://www.npmjs.com/package/svelte-hero-icons)
 1. [**rolldown**](https://rolldown.rs/)
 
+## TODOS
+
+- [ ] DatePicker at dashboard page
+- [ ] Calendar page
+
 ## Disclaimer
 
 [Svetle 5](https://svelte-5-preview.vercel.app/docs/introduction) is still in development. Expect bugs and warning.

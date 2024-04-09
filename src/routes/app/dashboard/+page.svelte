@@ -154,24 +154,28 @@
 			<ShareIcon class="w-4 mr-2" />
 			Share
 		</button>
+
 		<div class="dropdown dropdown-bottom dropdown-end ml-2">
-			<span class="btn btn-ghost btn-sm normal-case btn-square">
-				<EllipsisVertical class="w-5" />
-			</span>
-			<ul class="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-box w-52">
+			<div tabindex="-1" class="btn btn-ghost btn-sm normal-case btn-square">
+				<EllipsisVertical class="w-5 h-5" stroke={colorSlate300} aria-hidden={true} />
+			</div>
+			<div
+				tabindex="-1"
+				class="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-box w-52"
+			>
 				<li>
 					<span>
-						<EnvelopeIcon class="w-4" />
+						<EnvelopeIcon class="w-4 h-4" />
 						Email Digests
 					</span>
 				</li>
 				<li>
 					<span>
-						<ArrowDownTrayIcon class="w-4" />
+						<ArrowDownTrayIcon class="w-4 h-4" />
 						Download
 					</span>
 				</li>
-			</ul>
+			</div>
 		</div>
 	</div>
 </div>

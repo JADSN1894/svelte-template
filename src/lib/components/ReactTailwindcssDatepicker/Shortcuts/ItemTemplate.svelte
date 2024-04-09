@@ -2,14 +2,21 @@
 	import dayjs from 'dayjs';
 	import type { Period, ShortcutsItem } from '../types';
 	import type { Snippet } from 'svelte';
+	import type { DatepickerContext } from '../contexts/DatepickerContext';
+	import { TAILWIND_CONFIG } from '$lib/utils/tailwind';
+	import { TEXT_COLOR } from '../constants';
 
 	type ItemTemplateProps = {
 		children?: Snippet;
 		key: number;
 		item: ShortcutsItem | ShortcutsItem[];
+		period?: Period;
+		datePicker?: DatepickerContext;
 	};
 
-	const { children, key, item }: ItemTemplateProps = $props();
+	const { children, item, key, period, datePicker }: ItemTemplateProps = $props();
+
+	let purplePrimaryColor = TAILWIND_CONFIG.theme.colors.purple[600];
 
 	// const ItemTemplate = React.memo((props: ItemTemplateProps) => {
 	// const {
@@ -29,6 +36,12 @@
 	// 	const textColorHover = TEXT_COLOR.hover[primaryColor as keyof typeof TEXT_COLOR.hover];
 	// 	return `whitespace-nowrap w-1/2 md:w-1/3 lg:w-auto transition-all duration-300 hover:bg-gray-100 dark:hover:bg-white/10 p-2 rounded cursor-pointer ${textColor} ${textColorHover}`;
 	// }, [primaryColor]);
+
+	const getClassName = $state(() => {
+		const textColor = TEXT_COLOR['600'][purplePrimaryColor as keyof (typeof TEXT_COLOR)['600']];
+		const textColorHover = TEXT_COLOR.hover[purplePrimaryColor as keyof typeof TEXT_COLOR.hover];
+		return `whitespace-nowrap w-1/2 md:w-1/3 lg:w-auto transition-all duration-300 hover:bg-gray-100 dark:hover:bg-white/10 p-2 rounded cursor-pointer ${textColor} ${textColorHover}`;
+	});
 
 	// const chosePeriod = useCallback(
 	// 	(item: Period) => {
@@ -62,19 +75,34 @@
 	// );
 
 	// });
+
+	const chosePeriod = $state((item: Period) => {
+		if (datePicker?.dayHover) {
+			datePicker?.changeDayHover(null);
+		}
+		if (datePicker?.period.start || datePicker?.period.end) {
+			datePicker?.changePeriod({
+				start: null,
+				end: null
+			});
+		}
+		datePicker?.changePeriod(item);
+		datePicker?.changeDatepickerValue({
+			startDate: item.start,
+			endDate: item.end
+		});
+		datePicker?.updateFirstDate(dayjs(item.start));
+		datePicker?.hideDatepicker();
+	});
 </script>
 
-<!-- <li
-	className={getClassName()}
-	onClick={() => {
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		chosePeriod(props?.item.period);
-	}}
->
-	{children}
-</li> -->
-
 <div>
-	{@render children?.()}
+	<button
+		class={getClassName()}
+		onclick={() => {
+			chosePeriod(period!);
+		}}
+	>
+		{@render children?.()}
+	</button>
 </div>

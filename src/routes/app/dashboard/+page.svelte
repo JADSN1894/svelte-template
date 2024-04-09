@@ -168,7 +168,7 @@
 	let maxDate = $state(dayjs(new Date()).add(1, 'year').toDate());
 	let dateLooking = $state<DateLookingDatepickerType>('forward');
 	let disabledDates = $state([]);
-	let newDisabledDates = $state({ startDate: '', endDate: '' });
+	let newDisabledDates = $state<DateValueType>({ startDate: '', endDate: '' });
 	let startFrom = $state('2023-03-01');
 	let startWeekOn = $state('');
 

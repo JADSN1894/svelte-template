@@ -57,92 +57,128 @@ import { type Snippet } from "svelte";
 // }
 
 export interface DatepickerContext {
-    input: undefined;
+    input?: HTMLInputElement | null;
+    asSingle?: boolean;
     primaryColor: ColorKeys;
-    configs: undefined;
-    calendarContainer: null;
-    arrowContainer: null;
-    period: { start: null, end: null };
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changePeriod: (period: Period) => object;
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    hideDatepicker: () => object;
-    dayHover: null;
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changeDayHover: (day: string | null) => object;
+    configs?: Configs;
+    calendarContainer: HTMLDivElement | null;
+    arrowContainer: HTMLDivElement | null;
+    hideDatepicker: () => void;
+    period: Period;
+    changePeriod: (period: Period) => void;
+    dayHover: string | null;
+    changeDayHover: (day: string | null) => void;
     inputText: string;
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changeInputText: (text: string) => object;
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    updateFirstDate: (date: Date) => object;
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changeDatepickerValue: (value: DateValueType, e: HTMLInputElement | null | undefined) => object;
-    showFooter: false;
-    value: null;
+    changeInputText: (text: string) => void;
+    updateFirstDate: (date: dayjs.Dayjs) => void;
+    changeDatepickerValue: (value: DateValueType, e?: HTMLInputElement | null | undefined) => void;
+    showFooter?: boolean;
+    placeholder?: string | null;
+    separator: string;
     i18n: string;
-    disabled: false;
-    inputClassName: string;
-    containerClassName: string;
-    toggleClassName: string;
-    readOnly: false;
+    value: DateValueType;
+    disabled?: boolean;
+    inputClassName?: ((className: string) => string) | string | null;
+    containerClassName?: ((className: string) => string) | string | null;
+    toggleClassName?: ((className: string) => string) | string | null;
+    toggleIcon?: (open: boolean) => Snippet;
+    readOnly?: boolean;
+    startWeekOn?: string | null;
     displayFormat: string;
-    minDate: null;
-    maxDate: null;
+    minDate: DateType | null;
+    maxDate: DateType | null;
     dateLooking: DateLookingDatepickerType;
-    disabledDates: null;
-    inputId: undefined;
-    inputName: undefined;
-    startWeekOn: string;
-    toggleIcon: undefined;
-    classNames: undefined;
-    popoverDirection: undefined;
-    separator: "~"
+    disabledDates?: DateRangeType[] | null;
+    inputId?: string;
+    inputName?: string;
+    classNames?: ClassNamesTypeProp;
+    popoverDirection?: PopoverDirectionType;
+
 };
 
-// "en"
-// "YYYY-MM-DD"
 
-const stub = <DatepickerContext>{
+// <input type="text" class="input input-bordered w-72" placeholder="YYYY-MM-DD ~ YYYY-MM-DD" autocomplete="off" role="presentation" value="2024-04-08 ~ 2024-04-08">
 
-    input: undefined,
-    primaryColor: "blue",
-    configs: undefined,
+export const stub = {
+    input: null,
+    asSingle: false,
+    primaryColor: 'blue',
+    configs: {},
     calendarContainer: null,
     arrowContainer: null,
-    period: { start: null, end: null },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changePeriod: (period: Period) => { },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     hideDatepicker: () => { },
+    period: { start: "", end: "" },
+    changePeriod: (period: Period) => { },
     dayHover: null,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
     changeDayHover: (day: string | null) => { },
     inputText: "",
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
     changeInputText: (text: string) => { },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    updateFirstDate: (date: Date) => { },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-    changeDatepickerValue: (value: DateValueType, e: HTMLInputElement | null | undefined) => { },
-    showFooter: false,
-    value: null,
-    i18n: LANGUAGE,
+    updateFirstDate: (date: dayjs.Dayjs) => { },
+    changeDatepickerValue: (value: DateValueType, e?: HTMLInputElement | null | undefined) => { },
+    showFooter: true,
+    placeholder: "YYYY-MM-DD ~ YYYY-MM-DD",
+    separator: "~",
+    i18n: "en",
+    value: {
+        startDate: "2024-04-08",
+        endDate: "2024-04-08",
+    },
     disabled: false,
-    inputClassName: "",
-    containerClassName: "",
-    toggleClassName: "",
+    // inputClassName?: "",
+    // containerClassName?: "",
+    // toggleClassName?: "",
+    // toggleIcon?: (open: boolean) => { },
     readOnly: false,
+    // startWeekOn: '',
     displayFormat: DATE_FORMAT,
-    minDate: null,
-    maxDate: null,
-    dateLooking: "forward",
-    disabledDates: null,
-    inputId: undefined,
-    inputName: undefined,
-    startWeekOn: START_WEEK,
-    toggleIcon: undefined,
-    classNames: undefined,
-    popoverDirection: undefined,
-    separator: "~"
+    minDate: new Date(),
+    maxDate: new Date(),
+    dateLooking: 'forward',
+    // disabledDates?: null,
+    // inputId?: "",
+    // inputName?: "",
+    // classNames?: null,
+    // popoverDirection?: PopoverDirectionType,
 
-}
+    // input: undefined,
+    // primaryColor: "blue",
+    // configs: undefined,
+    // calendarContainer: null,
+    // arrowContainer: null,
+    // period: { start: null, end: null },
+    // // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    // changePeriod: (period: Period) => { },
+    // // eslint-disable-next-line @typescript-eslint/no-empty-function
+    // hideDatepicker: () => { },
+    // dayHover: null,
+    // // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    // changeDayHover: (day: string | null) => { },
+    // inputText: "",
+    // // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    // changeInputText: (text: string) => { },
+    // // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    // updateFirstDate: (date: Date) => { },
+    // // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+    // changeDatepickerValue: (value: DateValueType, e: HTMLInputElement | null | undefined) => { },
+    // showFooter: false,
+    // value: null,
+    // i18n: LANGUAGE,
+    // disabled: false,
+    // inputClassName: "",
+    // containerClassName: "",
+    // toggleClassName: "",
+    // readOnly: false,
+    // displayFormat: DATE_FORMAT,
+    // minDate: null,
+    // maxDate: null,
+    // dateLooking: "forward",
+    // disabledDates: null,
+    // inputId: undefined,
+    // inputName: undefined,
+    // startWeekOn: START_WEEK,
+    // toggleIcon: undefined,
+    // classNames: undefined,
+    // popoverDirection: undefined,
+    // separator: "~"
+
+} satisfies DatepickerContext

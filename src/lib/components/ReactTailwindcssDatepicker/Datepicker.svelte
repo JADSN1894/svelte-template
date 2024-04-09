@@ -14,6 +14,9 @@
 
 	import Arrow from './utils/Arrow.svelte';
 	import VerticalDash from './utils/VerticalDash.svelte';
+	import { stub } from './contexts/DatepickerContext';
+
+	const inputRef = $state(HTMLInputElement);
 
 	const {
 		primaryColor = 'blue',
@@ -80,7 +83,7 @@
 	// ) => {
 	// Ref
 	const containerRef = $state<HTMLDivElement | null>(null);
-	const calendarContainerRef = $state<HTMLDivElement | null>(null);
+	let calendarContainerRef = $state<HTMLDivElement | null>(null);
 	const arrowRef = $state<HTMLDivElement | null>(null);
 
 	// State
@@ -88,31 +91,30 @@
 	// 	startFrom && dayjs(startFrom).isValid() ? dayjs(startFrom) : dayjs()
 	// );
 
-	const firstDate = $state<dayjs.Dayjs>(
+	let firstDate = $state<dayjs.Dayjs>(
 		startFrom && dayjs(startFrom).isValid() ? dayjs(startFrom) : dayjs()
 	);
 
 	// const [secondDate, setSecondDate] = $state<dayjs.Dayjs>(nextMonth(firstDate));
-	const secondDate = $state<dayjs.Dayjs>(nextMonth(firstDate));
+	let secondDate = $state<dayjs.Dayjs>(nextMonth(firstDate));
 
 	// const [period, setPeriod] = $state<Period>({
 	// 	start: null,
 	// 	end: null
 	// });
 
-	const period = $state<Period>({
+	let period = $state<Period>({
 		start: null,
 		end: null
 	});
 
 	// const [dayHover, setDayHover] = $state<string | null>(null);
-	const dayHover = $state<string | null>(null);
+	let dayHover = $state<string | null>(null);
 
 	// const [inputText, setInputText] = $state<string>('');
-	const inputText = $state<string>('');
+	let inputText = $state<string>('');
 
 	// const [inputRef, setInputRef] = $state(React.createRef<HTMLInputElement>());
-	const inputRef = $state(HTMLInputElement);
 
 	// Custom Hooks use
 	// useOnClickOutside(containerRef, () => {
@@ -146,6 +148,29 @@
 	// 	}
 	// }, []);
 
+	const hideDatepicker = $state(() => {
+		const div = calendarContainerRef!;
+		const arrow = arrowRef!;
+		if (arrow && div && div.classList.contains('block')) {
+			div.classList.remove('block');
+			div.classList.remove('translate-y-0');
+			div.classList.remove('opacity-1');
+			div.classList.add('translate-y-4');
+			div.classList.add('opacity-0');
+			setTimeout(() => {
+				div.classList.remove('bottom-full');
+				div.classList.add('hidden');
+				div.classList.add('mb-2.5');
+				div.classList.add('mt-2.5');
+				arrow.classList.remove('-bottom-2');
+				arrow.classList.remove('border-r');
+				arrow.classList.remove('border-b');
+				arrow.classList.add('border-l');
+				arrow.classList.add('border-t');
+			}, 300);
+		}
+	});
+
 	/* Start First */
 	// const firstGotoDate = useCallback(
 	// 	(date: dayjs.Dayjs) => {
@@ -159,13 +184,28 @@
 	// 	[secondDate]
 	// );
 
-	// const previousMonthFirst = useCallback(() => {
-	// 	setFirstDate(previousMonth(firstDate));
-	// }, [firstDate]);
+	const firstGotoDate = $state((date: dayjs.Dayjs) => {
+		const newDate = dayjs(formatDate(date));
+		const reformatDate = dayjs(formatDate(secondDate));
+		if (newDate.isSame(reformatDate) || newDate.isAfter(reformatDate)) {
+			secondDate = nextMonth(date);
+		}
+		firstDate = date;
+		return secondDate;
+	});
+
+	const previousMonthFirst = $state(() => {
+		firstDate = previousMonth(firstDate);
+		return firstDate;
+	});
 
 	// const nextMonthFirst = useCallback(() => {
 	// 	firstGotoDate(nextMonth(firstDate));
 	// }, [firstDate, firstGotoDate]);
+
+	const nextMonthFirst = $state(() => {
+		return firstGotoDate(nextMonth(firstDate));
+	});
 
 	// const changeFirstMonth = useCallback(
 	// 	(month: number) => {
@@ -174,12 +214,20 @@
 	// 	[firstDate, firstGotoDate]
 	// );
 
+	const changeFirstMonth = $state((month: number) => {
+		return firstGotoDate(dayjs(`${firstDate.year()}-${month < 10 ? '0' : ''}${month}-01`));
+	});
+
 	// const changeFirstYear = useCallback(
 	// 	(year: number) => {
 	// 		firstGotoDate(dayjs(`${year}-${firstDate.month() + 1}-01`));
 	// 	},
 	// 	[firstDate, firstGotoDate]
 	// );
+
+	const changeFirstYear = $state((year: number) => {
+		return firstGotoDate(dayjs(`${year}-${firstDate.month() + 1}-01`));
+	});
 	/* End First */
 
 	/* Start Second */
@@ -195,13 +243,27 @@
 	// 	[firstDate, displayFormat]
 	// );
 
+	const secondGotoDate = $state((date: dayjs.Dayjs) => {
+		const newDate = dayjs(formatDate(date, displayFormat));
+		const reformatDate = dayjs(formatDate(firstDate, displayFormat));
+		if (newDate.isSame(reformatDate) || newDate.isBefore(reformatDate)) {
+			firstDate = previousMonth(date);
+		}
+		secondDate = date;
+	});
+
 	// const previousMonthSecond = useCallback(() => {
 	// 	secondGotoDate(previousMonth(secondDate));
 	// }, [secondDate, secondGotoDate]);
 
-	// const nextMonthSecond = useCallback(() => {
-	// 	setSecondDate(nextMonth(secondDate));
-	// }, [secondDate]);
+	const previousMonthSecond = $state(() => {
+		return secondGotoDate(previousMonth(secondDate));
+	});
+
+	const nextMonthSecond = $state(() => {
+		secondDate = nextMonth(secondDate);
+		return secondDate;
+	});
 
 	// const changeSecondMonth = useCallback(
 	// 	(month: number) => {
@@ -210,12 +272,20 @@
 	// 	[secondDate, secondGotoDate]
 	// );
 
+	const changeSecondMonth = $state((month: number) => {
+		return secondGotoDate(dayjs(`${secondDate.year()}-${month < 10 ? '0' : ''}${month}-01`));
+	});
+
 	// const changeSecondYear = useCallback(
 	// 	(year: number) => {
 	// 		secondGotoDate(dayjs(`${year}-${secondDate.month() + 1}-01`));
 	// 	},
 	// 	[secondDate, secondGotoDate]
 	// );
+
+	const changeSecondYear = $state((year: number) => {
+		return secondGotoDate(dayjs(`${year}-${secondDate.month() + 1}-01`));
+	});
 	/* End Second */
 
 	// UseEffects & UseLayoutEffect
@@ -237,6 +307,24 @@
 	// 	}
 	// }, []);
 
+	$effect(() => {
+		const container = containerRef;
+		const calendarContainer = calendarContainerRef;
+		const arrow = arrowRef;
+
+		if (container && calendarContainer && arrow) {
+			const detail = container.getBoundingClientRect();
+			const screenCenter = window.innerWidth / 2;
+			const containerCenter = (detail.right - detail.x) / 2 + detail.x;
+
+			if (containerCenter > screenCenter) {
+				arrow.classList.add('right-0');
+				arrow.classList.add('mr-3.5');
+				calendarContainer.classList.add('right-0');
+			}
+		}
+	});
+
 	// useEffect(() => {
 	// 	if (value && value.startDate && value.endDate) {
 	// 		const startDate = dayjs(value.startDate);
@@ -256,14 +344,31 @@
 	// 		}
 	// 	}
 
-	// 	if (value && value.startDate === null && value.endDate === null) {
-	// 		setPeriod({
-	// 			start: null,
-	// 			end: null
-	// 		});
-	// 		setInputText('');
-	// 	}
-	// }, [asSingle, value, displayFormat, separator]);
+	$effect(() => {
+		if (value && value.startDate && value.endDate) {
+			const startDate = dayjs(value.startDate);
+			const endDate = dayjs(value.endDate);
+			const validDate = startDate.isValid() && endDate.isValid();
+			const condition = validDate && (startDate.isSame(endDate) || startDate.isBefore(endDate));
+			if (condition) {
+				period = {
+					start: formatDate(startDate),
+					end: formatDate(endDate)
+				};
+				inputText = `${formatDate(startDate, displayFormat)}${
+					asSingle ? '' : ` ${separator} ${formatDate(endDate, displayFormat)}`
+				}`;
+			}
+		}
+
+		if (value && value.startDate === null && value.endDate === null) {
+			period = {
+				start: null,
+				end: null
+			};
+			inputText = '';
+		}
+	});
 
 	// useEffect(() => {
 	// 	if (startFrom && dayjs(startFrom).isValid()) {
@@ -289,6 +394,30 @@
 	// 	}
 	// }, [asSingle, startFrom, value]);
 
+	$effect(() => {
+		if (startFrom && dayjs(startFrom).isValid()) {
+			const startDate = value?.startDate;
+			const endDate = value?.endDate;
+			if (startDate && dayjs(startDate).isValid()) {
+				firstDate = dayjs(startDate);
+				if (!asSingle) {
+					if (
+						endDate &&
+						dayjs(endDate).isValid() &&
+						dayjs(endDate).startOf('month').isAfter(dayjs(startDate))
+					) {
+						secondDate = dayjs(endDate);
+					} else {
+						secondDate = nextMonth(dayjs(startDate));
+					}
+				}
+			} else {
+				firstDate = dayjs(startFrom);
+				secondDate = nextMonth(dayjs(startFrom));
+			}
+		}
+	});
+
 	// Variables
 	// const safePrimaryColor = useMemo(() => {
 	// 	if (COLORS.includes(primaryColor)) {
@@ -296,6 +425,18 @@
 	// 	}
 	// 	return DEFAULT_COLOR;
 	// }, [primaryColor]);
+
+	const safePrimaryColor = $state(() => {
+		if (COLORS.includes(primaryColor)) {
+			return primaryColor as ColorKeys;
+		}
+		return DEFAULT_COLOR;
+	});
+
+	// const contextValues = $state(() => {
+	// 	return {} statisfies
+	// });
+
 	// const contextValues = useMemo(() => {
 	// 	return {
 	// 		asSingle,
@@ -379,6 +520,15 @@
 	// 			: defaultContainerClassName;
 	// }, [containerClassName]);
 
+	const containerClassNameOverload = $state(() => {
+		const defaultContainerClassName = 'relative w-full text-gray-700';
+		return typeof containerClassName === 'function'
+			? containerClassName(defaultContainerClassName)
+			: typeof containerClassName === 'string' && containerClassName !== ''
+				? containerClassName
+				: defaultContainerClassName;
+	});
+
 	// return (
 	// 	<DatepickerContext.Provider value={contextValues}>
 	// 		<div className={containerClassNameOverload} ref={containerRef}>
@@ -437,3 +587,23 @@
 	// );
 	// };
 </script>
+
+<div class={containerClassNameOverload()}>
+	<Input datePicker={stub} />
+	<div
+		class="transition-all ease-out duration-300 absolute z-10 mt-[1px] text-sm lg:text-xs 2xl:text-sm translate-y-4 opacity-0 hidden"
+		bind:this={calendarContainerRef}
+	>
+		<Arrow ref={arrowRef!} />
+
+		<div
+			class="mt-2.5 shadow-sm border border-gray-300 px-1 py-0.5 dark:bg-slate-800 dark:text-white dark:border-slate-600 rounded-lg"
+		>
+			<div class="flex flex-col lg:flex-row py-2">
+				{#if showShortcuts}
+					<Shortcuts configs={stub.configs} />
+				{/if}
+			</div>
+		</div>
+	</div>
+</div>

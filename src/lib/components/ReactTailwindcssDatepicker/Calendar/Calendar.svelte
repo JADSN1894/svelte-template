@@ -1,5 +1,5 @@
 <script lang="ts">
-	import dayjs from 'dayjs';
+	import dayjs, { Dayjs } from 'dayjs';
 	// import React, { useCallback, useContext, useEffect, useMemo, $state } from 'react';
 
 	import { CALENDAR_SIZE, DATE_FORMAT } from '../constants';
@@ -30,8 +30,10 @@
 	import type { DateType } from '../types';
 	import RoundedButton from '../utils/RoundedButton.svelte';
 
+	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
+
 	interface Props {
-		date: dayjs.Dayjs;
+		date: Dayjs;
 		minDate?: DateType | null;
 		maxDate?: DateType | null;
 		onClickPrevious: () => void;
@@ -40,218 +42,166 @@
 		changeYear: (year: number) => void;
 	}
 
-	let { date, minDate, maxDate, onClickPrevious, onClickNext, changeMonth, changeYear }: Props =
+	let { date, onClickPrevious, onClickNext, changeMonth, changeYear, minDate, maxDate }: Props =
 		$props();
 
-	// const Calendar: React.FC<Props> = ({
-	// 	date,
-	// 	minDate,
-	// 	maxDate,
-	// 	onClickPrevious,
-	// 	onClickNext,
-	// 	changeMonth,
-	// 	changeYear
-	// }) => {
-	// Contexts
-	// const {
-	// 	period,
-	// 	changePeriod,
-	// 	changeDayHover,
-	// 	showFooter,
-	// 	changeDatepickerValue,
-	// 	hideDatepicker,
-	// 	asSingle,
-	// 	i18n,
-	// 	startWeekOn,
-	// 	input
-	// } = useContext(DatepickerContext);
-	// loadLanguageModule(i18n);
+	let {
+		period,
+		changePeriod,
+		changeDayHover,
+		showFooter,
+		changeDatepickerValue,
+		hideDatepicker,
+		asSingle,
+		i18n,
+		startWeekOn,
+		input
+	} = getReactTailwindcssDatepickerState();
 
 	// States
 	// const [showMonths, setShowMonths] = $state(false);
-	const showMonths = $state(false);
+	let showMonths = $state(false);
 
 	// const [showYears, setShowYears] = $state(false);
-	const showYears = $state(false);
+	let showYears = $state(false);
 
 	// const [year, setYear] = $state(date.year());
-	const year = $state(date.year());
+	let year = $state(date.year());
 
-	// Functions
-	// const previous = useCallback(() => {
-	// 	return getLastDaysInMonth(
-	// 		previousMonth(date),
-	// 		getNumberOfDay(getFirstDayInMonth(date).ddd, startWeekOn)
-	// 	);
-	// }, [date, startWeekOn]);
+	$effect(() => {
+		loadLanguageModule(i18n);
+	});
 
-	// const current = useCallback(() => {
-	// 	return getDaysInMonth(formatDate(date));
-	// }, [date]);
+	const previous = () => {
+		return getLastDaysInMonth(
+			previousMonth(date),
+			getNumberOfDay(getFirstDayInMonth(date).ddd, startWeekOn)
+		);
+	};
 
-	// const next = useCallback(() => {
-	// 	return getFirstDaysInMonth(
-	// 		previousMonth(date),
-	// 		CALENDAR_SIZE - (previous().length + current().length)
-	// 	);
-	// }, [current, date, previous]);
+	const current = () => {
+		return getDaysInMonth(formatDate(date));
+	};
 
-	// const hideMonths = useCallback(() => {
-	// 	showMonths && setShowMonths(false);
-	// }, [showMonths]);
+	const next = () => {
+		return getFirstDaysInMonth(
+			previousMonth(date),
+			CALENDAR_SIZE - (previous().length + current().length)
+		);
+	};
 
-	// const hideYears = useCallback(() => {
-	// 	showYears && setShowYears(false);
-	// }, [showYears]);
+	const hideMonths = () => (showMonths = false);
+	const hideYears = () => (showYears = false);
 
-	// const clickMonth = useCallback(
-	// 	(month: number) => {
-	// 		setTimeout(() => {
-	// 			changeMonth(month);
-	// 			setShowMonths(!showMonths);
-	// 		}, 250);
-	// 	},
-	// 	[changeMonth, showMonths]
-	// );
+	const clickMonth = $state((month: number) => {
+		setTimeout(() => {
+			changeMonth(month);
+			showMonths = !showMonths;
+		}, 250);
+	});
 
-	// const clickYear = useCallback(
-	// 	(year: number) => {
-	// 		setTimeout(() => {
-	// 			changeYear(year);
-	// 			setShowYears(!showYears);
-	// 		}, 250);
-	// 	},
-	// 	[changeYear, showYears]
-	// );
+	const clickYear = $state((year: number) => {
+		setTimeout(() => {
+			changeYear(year);
+			showYears = !showYears;
+		}, 250);
+	});
 
-	// const clickDay = useCallback(
-	// 	(day: number, month = date.month() + 1, year = date.year()) => {
-	// 		const fullDay = `${year}-${month}-${day}`;
-	// 		let newStart;
-	// 		let newEnd = null;
+	const clickDay = $state((day: number, month = date.month() + 1, year = date.year()) => {
+		const fullDay = `${year}-${month}-${day}`;
+		let newStart;
+		let newEnd = null;
 
-	// 		function chosePeriod(start: string, end: string) {
-	// 			const ipt = input?.current;
-	// 			changeDatepickerValue(
-	// 				{
-	// 					startDate: dayjs(start).format(DATE_FORMAT),
-	// 					endDate: dayjs(end).format(DATE_FORMAT)
-	// 				},
-	// 				ipt
-	// 			);
-	// 			hideDatepicker();
-	// 		}
+		function chosePeriod(start: string, end: string) {
+			const ipt = input;
+			changeDatepickerValue(
+				{
+					startDate: dayjs(start).format(DATE_FORMAT),
+					endDate: dayjs(end).format(DATE_FORMAT)
+				},
+				ipt
+			);
+			hideDatepicker();
+		}
 
-	// 		if (period.start && period.end) {
-	// 			if (changeDayHover) {
-	// 				changeDayHover(null);
-	// 			}
-	// 			changePeriod({
-	// 				start: null,
-	// 				end: null
-	// 			});
-	// 		}
+		if (period.start && period.end) {
+			if (changeDayHover) {
+				changeDayHover(null);
+			}
+			changePeriod({
+				start: null,
+				end: null
+			});
+		}
 
-	// 		if ((!period.start && !period.end) || (period.start && period.end)) {
-	// 			if (!period.start && !period.end) {
-	// 				changeDayHover(fullDay);
-	// 			}
-	// 			newStart = fullDay;
-	// 			if (asSingle) {
-	// 				newEnd = fullDay;
-	// 				chosePeriod(fullDay, fullDay);
-	// 			}
-	// 		} else {
-	// 			if (period.start && !period.end) {
-	// 				// start not null
-	// 				// end null
-	// 				const condition =
-	// 					dayjs(fullDay).isSame(dayjs(period.start)) ||
-	// 					dayjs(fullDay).isAfter(dayjs(period.start));
-	// 				newStart = condition ? period.start : fullDay;
-	// 				newEnd = condition ? fullDay : period.start;
-	// 			} else {
-	// 				// Start null
-	// 				// End not null
-	// 				const condition =
-	// 					dayjs(fullDay).isSame(dayjs(period.end)) || dayjs(fullDay).isBefore(dayjs(period.end));
-	// 				newStart = condition ? fullDay : period.start;
-	// 				newEnd = condition ? period.end : fullDay;
-	// 			}
+		if ((!period.start && !period.end) || (period.start && period.end)) {
+			if (!period.start && !period.end) {
+				changeDayHover(fullDay);
+			}
+			newStart = fullDay;
+			if (asSingle) {
+				newEnd = fullDay;
+				chosePeriod(fullDay, fullDay);
+			}
+		} else {
+			if (period.start && !period.end) {
+				// start not null
+				// end null
+				const condition =
+					dayjs(fullDay).isSame(dayjs(period.start)) || dayjs(fullDay).isAfter(dayjs(period.start));
+				newStart = condition ? period.start : fullDay;
+				newEnd = condition ? fullDay : period.start;
+			} else {
+				// Start null
+				// End not null
+				const condition =
+					dayjs(fullDay).isSame(dayjs(period.end)) || dayjs(fullDay).isBefore(dayjs(period.end));
+				newStart = condition ? fullDay : period.start;
+				newEnd = condition ? period.end : fullDay;
+			}
 
-	// 			if (!showFooter) {
-	// 				if (newStart && newEnd) {
-	// 					chosePeriod(newStart, newEnd);
-	// 				}
-	// 			}
-	// 		}
+			if (!showFooter) {
+				if (newStart && newEnd) {
+					chosePeriod(newStart, newEnd);
+				}
+			}
+		}
 
-	// 		if (!(newEnd && newStart) || showFooter) {
-	// 			changePeriod({
-	// 				start: newStart,
-	// 				end: newEnd
-	// 			});
-	// 		}
-	// 	},
-	// 	[
-	// 		asSingle,
-	// 		changeDatepickerValue,
-	// 		changeDayHover,
-	// 		changePeriod,
-	// 		date,
-	// 		hideDatepicker,
-	// 		period.end,
-	// 		period.start,
-	// 		showFooter,
-	// 		input
-	// 	]
-	// );
+		if (!(newEnd && newStart) || showFooter) {
+			changePeriod({
+				start: newStart,
+				end: newEnd
+			});
+		}
+	});
 
-	// const clickPreviousDays = useCallback(
-	// 	(day: number) => {
-	// 		const newDate = previousMonth(date);
-	// 		clickDay(day, newDate.month() + 1, newDate.year());
-	// 		onClickPrevious();
-	// 	},
-	// 	[clickDay, date, onClickPrevious]
-	// );
+	const clickPreviousDays = $state((day: number) => {
+		const newDate = previousMonth(date);
+		clickDay(day, newDate.month() + 1, newDate.year());
+		onClickPrevious();
+	});
 
-	// const clickNextDays = useCallback(
-	// 	(day: number) => {
-	// 		const newDate = nextMonth(date);
-	// 		clickDay(day, newDate.month() + 1, newDate.year());
-	// 		onClickNext();
-	// 	},
-	// 	[clickDay, date, onClickNext]
-	// );
+	const clickNextDays = $state((day: number) => {
+		const newDate = nextMonth(date);
+		clickDay(day, newDate.month() + 1, newDate.year());
+		onClickNext();
+	});
 
-	// // UseEffects & UseLayoutEffect
-	// useEffect(() => {
-	// 	setYear(date.year());
-	// }, [date]);
+	$effect(() => {
+		year = date.year();
+	});
 
-	// // Variables
-	// const calendarData = useMemo(() => {
-	// 	return {
-	// 		date: date,
-	// 		days: {
-	// 			previous: previous(),
-	// 			current: current(),
-	// 			next: next()
-	// 		}
-	// 	};
-	// }, [current, date, next, previous]);
-	// const minYear = React.useMemo(
-	// 	() => (minDate && dayjs(minDate).isValid() ? dayjs(minDate).year() : null),
-	// 	[minDate]
-	// );
-	// const maxYear = React.useMemo(
-	// 	() => (maxDate && dayjs(maxDate).isValid() ? dayjs(maxDate).year() : null),
-	// 	[maxDate]
-	// );
-	// };
-
-	// export default Calendar;
+	// Variables
+	const calendarData = $state({
+		date: date,
+		days: {
+			previous: previous(),
+			current: current(),
+			next: next()
+		}
+	});
+	const minYear = $derived(minDate && dayjs(minDate).isValid() ? dayjs(minDate).year() : null);
+	const maxYear = $derived(maxDate && dayjs(maxDate).isValid() ? dayjs(maxDate).year() : null);
 </script>
 
 <div class="w-full md:w-[296px] md:min-w-[296px]">
@@ -260,11 +210,95 @@
 	>
 		{#if !showMonths && !showYears}
 			<div class="flex-none">
-				<!-- <RoundedButton onclick={onClickPrevious}  roundedfull={true} > -->
 				<RoundedButton onclick={() => onClickPrevious()} roundedFull={true}>
 					<ChevronLeftIcon class="h-5 w-5" />
 				</RoundedButton>
 			</div>
-		{:else}{/if}
+		{/if}
+
+		{#if showYears}
+			<RoundedButton
+				roundedFull={true}
+				onclick={() => {
+					year = year - 12;
+				}}
+			>
+				<DoubleChevronLeftIcon className="h-5 w-5" />
+			</RoundedButton>
+		{/if}
+
+		<div class="flex flex-1 items-center space-x-1.5">
+			<div class="w-1/2">
+				<RoundedButton
+					onclick={() => {
+						showMonths = !showMonths;
+						hideYears();
+					}}
+				>
+					<div>
+						{calendarData.date.locale(i18n).format('MMM')}
+						<div />
+					</div>
+				</RoundedButton>
+			</div>
+			<div class="w-1/2">
+				<RoundedButton
+					onclick={() => {
+						showYears = !showYears;
+						hideMonths();
+					}}
+				>
+					<div>
+						{calendarData.date.year()}
+						<div />
+					</div>
+				</RoundedButton>
+			</div>
+		</div>
+		show
+
+		{#if showYears}
+			<div class="flex-none">
+				<RoundedButton
+					roundedFull={true}
+					onclick={() => {
+						year = year + 12;
+					}}
+				>
+					<DoubleChevronRightIcon class="h-5 w-5" />
+				</RoundedButton>
+			</div>
+		{/if}
+
+		{#if !showMonths && !showYears}
+			<div class="flex-none">
+				<RoundedButton roundedFull={true} onclick={onClickNext}>
+					<ChevronRightIcon class="h-5 w-5" />
+				</RoundedButton>
+			</div>
+		{/if}
+	</div>
+
+	<div class="px-0.5 sm:px-2 mt-0.5 min-h-[285px]">
+		{#if showMonths}
+			<Months currentMonth={calendarData.date.month() + 1} {clickMonth} />
+		{/if}
+
+		{#if showYears}
+			<Years {year} {minYear} {maxYear} currentYear={calendarData.date.year()} {clickYear} />
+		{/if}
+
+		{#if !showMonths && !showYears}
+			<div>
+				<Week />
+
+				<Days
+					{calendarData}
+					onClickPreviousDays={clickPreviousDays}
+					onClickDay={clickDay}
+					onClickNextDays={clickNextDays}
+				/>
+			</div>
+		{/if}
 	</div>
 </div>

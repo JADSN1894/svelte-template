@@ -11,6 +11,10 @@
 	import ShareIcon from '$icons/hero-icons/ShareIcon.svelte';
 	import UserGroupIcon from '$icons/hero-icons/UserGroupIcon.svelte';
 	import UsersIcon from '$icons/hero-icons/UsersIcon.svelte';
+	import {
+		setReactTailwindcssDatepickerState,
+		stubReactTailwindcssDatepickerStateProps
+	} from '$lib/components/ReactTailwindcssDatepicker/ReactTailwindcssDatepickerState.ts';
 	import Datepicker from '$root/src/lib/components/ReactTailwindcssDatepicker/Datepicker.svelte';
 	import type {
 		ColorKeys,
@@ -26,9 +30,13 @@
 
 	//* ChartJs
 	import Chart from 'chart.js/auto';
-	import dayjs from 'dayjs';
+	import dayjs, { Dayjs } from 'dayjs';
 
-	const colorSlate300 = TAILWIND_CONFIG.theme.colors.slate[300];
+	// const colorSlate300 = TAILWIND_CONFIG.theme.colors.slate[300];
+
+	$effect(() => {
+		setReactTailwindcssDatepickerState(stubReactTailwindcssDatepickerStateProps());
+	});
 
 	//* Montly Active Users (in k)
 	const MONTLY_ACTIVE_USERS_IN_K = 'canvas-dashboard-montly-active-users-in-k-graph';
@@ -147,8 +155,8 @@
 
 	//* DatePicker states
 	let value = $state<DateValueType>({
-		startDate: null,
-		endDate: null
+		startDate: dayjs().toDate(),
+		endDate: dayjs().add(1, 'year').toDate()
 	});
 	let primaryColor = $state<ColorKeys>('blue');
 	let useRange = $state(true);
@@ -168,7 +176,7 @@
 	let maxDate = $state(dayjs(new Date()).add(1, 'year').toDate());
 	let dateLooking = $state<DateLookingDatepickerType>('forward');
 	let disabledDates = $state([]);
-	let newDisabledDates = $state<DateValueType>({ startDate: '', endDate: '' });
+	// let newDisabledDates = $state<DateValueType>({ startDate: '', endDate: '' });
 	let startFrom = $state('2023-03-01');
 	let startWeekOn = $state('');
 
@@ -177,6 +185,8 @@
 	// 	console.log(e);
 	// 	console.log('value', value);
 	// };
+
+	// let { dateLooking } = getReactTailwindcssDatepickerState();
 
 	pageTitleState.pageTitle = 'Dashboard';
 
@@ -191,7 +201,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 	<div class="">
 		<div class="w-72">
-			<!-- <span class="text-warning text-2xl">Calendar Component</span> -->
+			<span class="text-warning text-2xl">Calendar Component</span>
 			<Datepicker
 				{value}
 				{primaryColor}
@@ -287,7 +297,7 @@
 	<div class="stats shadow">
 		<div class="stat">
 			<div class="stat-figure dark:text-slate-300 text-primary">
-				<UserGroupIcon class="w-8 h-8" stroke={colorSlate300} aria-hidden={true} />
+				<UserGroupIcon class="w-8 h-8" stroke={primaryColor} aria-hidden={true} />
 			</div>
 			<div class="stat-title dark:text-slate-300">New Users</div>
 			<div class="stat-value dark:text-slate-300">34.7k</div>
@@ -297,9 +307,9 @@
 	<div class="stats shadow">
 		<div class="stat">
 			<div class="stat-figure dark:text-slate-300 text-primary">
-				<CreditCardIcon class="w-8 h-8" stroke={colorSlate300} />
+				<CreditCardIcon class="w-8 h-8" stroke={primaryColor} />
 			</div>
-			<div class="stat-title dark:text-slate-300" color={colorSlate300}>Total Sales</div>
+			<div class="stat-title dark:text-slate-300" color={primaryColor}>Total Sales</div>
 			<div class="stat-value dark:text-slate-300">$34,545</div>
 			<div class="stat-desc">Current month</div>
 		</div>
@@ -307,7 +317,7 @@
 	<div class="stats shadow">
 		<div class="stat">
 			<div class="stat-figure dark:text-slate-300 text-primary">
-				<CircleStackIcon class="w-8 h-8" stroke={colorSlate300} />
+				<CircleStackIcon class="w-8 h-8" stroke={primaryColor} />
 			</div>
 			<div class="stat-title dark:text-slate-300">Pending Leads</div>
 			<div class="stat-value dark:text-slate-300">450</div>
@@ -317,7 +327,7 @@
 	<div class="stats shadow">
 		<div class="stat">
 			<div class="stat-figure dark:text-slate-300 text-primary">
-				<UsersIcon class="w-8 h-8" stroke={colorSlate300} />
+				<UsersIcon class="w-8 h-8" stroke={primaryColor} />
 			</div>
 			<div class="stat-title dark:text-slate-300">Active Users</div>
 			<div class="stat-value dark:text-slate-300">5.6k</div>

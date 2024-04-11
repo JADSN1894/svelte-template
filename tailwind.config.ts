@@ -6,7 +6,7 @@ import daisyui from 'daisyui'
 
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
-  darkMode: ["class", '[data-theme="dark"]'],
+  darkMode: ["class", '[data-theme="coffee"]'],
   theme: {
     extend: {},
   },
@@ -18,7 +18,7 @@ export default {
   daisyui: {
     themes: [
       { light: { ...daisyUiThemes.light } },
-      { dark: { ...daisyUiThemes.dark } },
+      { dark: { ...daisyUiThemes.coffee } },
     ],
   },
 } satisfies Config

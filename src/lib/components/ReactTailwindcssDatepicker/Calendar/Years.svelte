@@ -1,10 +1,8 @@
 <script lang="ts">
-	// import React, { useContext } from 'react';
+	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
 
 	import { generateArrayNumber } from '../helpers';
 	import RoundedButton from '../utils/RoundedButton.svelte';
-
-	// import DatepickerContext from '../contexts/DatepickerContext';
 
 	interface Props {
 		year: number;
@@ -14,44 +12,45 @@
 		clickYear: (data: number) => void;
 	}
 
+	let { dateLooking } = getReactTailwindcssDatepickerState();
+
 	let { year, currentYear, minYear, maxYear, clickYear }: Props = $props();
 
-	// const Years: React.FC<Props> = ({ year, currentYear, minYear, maxYear, clickYear }) => {
-	// 	const { dateLooking } = useContext(DatepickerContext);
+	let startDate = $state(0);
+	let endDate = $state(0);
 
-	// 	let startDate = 0;
-	// 	let endDate = 0;
-
-	// 	switch (dateLooking) {
-	// 		case 'backward':
-	// 			startDate = year - 11;
-	// 			endDate = year;
-	// 			break;
-	// 		case 'middle':
-	// 			startDate = year - 4;
-	// 			endDate = year + 7;
-	// 			break;
-	// 		case 'forward':
-	// 		default:
-	// 			startDate = year;
-	// 			endDate = year + 11;
-	// 			break;
-	// 	}
-	// };
+	const _ = $derived.by(() => {
+		switch (dateLooking) {
+			case 'backward':
+				startDate = year - 11;
+				endDate = year;
+				break;
+			case 'middle':
+				startDate = year - 4;
+				endDate = year + 7;
+				break;
+			case 'forward':
+			default:
+				startDate = year;
+				endDate = year + 11;
+				break;
+		}
+	});
 </script>
 
 <div class="w-full grid grid-cols-2 gap-2 mt-2">
-	<!-- {generateArrayNumber(startDate, endDate).map((item, index) => (
+	{#each generateArrayNumber(startDate, endDate) as item}
 		<RoundedButton
-			key={index}
 			padding="py-3"
-			onClick={() => {
+			onclick={() => {
 				clickYear(item);
 			}}
 			active={currentYear === item}
 			disabled={(maxYear !== null && item > maxYear) || (minYear !== null && item < minYear)}
 		>
-			<>{item}</>
+			<div>
+				{item}
+			</div>
 		</RoundedButton>
-	))} -->
+	{/each}
 </div>

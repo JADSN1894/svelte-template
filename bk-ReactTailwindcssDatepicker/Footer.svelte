@@ -7,11 +7,18 @@
 
 	import PrimaryButton from './utils/PrimaryButton.svelte';
 	import SecondaryButton from './utils/SecondaryButton.svelte';
+	import type { DatepickerContext } from './contexts/DatepickerContext';
 
-	import { getReactTailwindcssDatepickerState } from './ReactTailwindcssDatepickerState';
+	type Props = {
+		// setContextRef?: (ref: React.RefObject<HTMLInputElement>) => void;
+		// setContextRef?: (ref: HTMLInputElement) => void;
 
-	const { hideDatepicker, period, changeDatepickerValue, configs, classNames } =
-		getReactTailwindcssDatepickerState();
+		datePicker: DatepickerContext;
+	};
+
+	const { hideDatepicker, period, changeDatepickerValue, configs, classNames }: DatepickerContext =
+		$props();
+
 	// Contexts
 	// const { hideDatepicker, period, changeDatepickerValue, configs, classNames } =
 	// 	useContext(DatepickerContext);

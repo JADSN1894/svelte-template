@@ -11,7 +11,7 @@
 	//* Tailwind
 	import { TAILWIND_CONFIG } from '$lib/utils/tailwind';
 
-	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
+	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState.svelte';
 	import { loadLanguageModule } from '../helpers';
 
 	// let purplePrimaryColor = TAILWIND_CONFIG.theme.colors.purple;

@@ -8,7 +8,7 @@
 	import PrimaryButton from './utils/PrimaryButton.svelte';
 	import SecondaryButton from './utils/SecondaryButton.svelte';
 
-	import { getReactTailwindcssDatepickerState } from './ReactTailwindcssDatepickerState';
+	import { getReactTailwindcssDatepickerState } from './ReactTailwindcssDatepickerState.svelte';
 
 	const { hideDatepicker, period, changeDatepickerValue, configs, classNames } =
 		getReactTailwindcssDatepickerState();

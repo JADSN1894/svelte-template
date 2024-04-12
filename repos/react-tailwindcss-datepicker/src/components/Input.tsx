@@ -60,8 +60,8 @@ const Input: React.FC<Props> = (e: Props) => {
         return typeof inputClassName === "function"
             ? inputClassName(defaultInputClassName)
             : typeof inputClassName === "string" && inputClassName !== ""
-            ? inputClassName
-            : defaultInputClassName;
+                ? inputClassName
+                : defaultInputClassName;
     }, [inputRef, classNames, primaryColor, inputClassName]);
 
     const handleInputChange = useCallback(
@@ -158,8 +158,8 @@ const Input: React.FC<Props> = (e: Props) => {
         return typeof toggleClassName === "function"
             ? toggleClassName(defaultToggleClassName)
             : typeof toggleClassName === "string" && toggleClassName !== ""
-            ? toggleClassName
-            : defaultToggleClassName;
+                ? toggleClassName
+                : defaultToggleClassName;
     }, [toggleClassName, buttonRef, classNames]);
 
     // UseEffects && UseLayoutEffect

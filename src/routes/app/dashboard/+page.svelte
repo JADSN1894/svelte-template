@@ -14,7 +14,7 @@
 	import {
 		setReactTailwindcssDatepickerState,
 		stubReactTailwindcssDatepickerStateProps
-	} from '$lib/components/ReactTailwindcssDatepicker/ReactTailwindcssDatepickerState.ts';
+	} from '$root/src/lib/components/ReactTailwindcssDatepicker/ReactTailwindcssDatepickerState.svelte';
 	import Datepicker from '$root/src/lib/components/ReactTailwindcssDatepicker/Datepicker.svelte';
 	import type {
 		ColorKeys,
@@ -33,10 +33,6 @@
 	import dayjs, { Dayjs } from 'dayjs';
 
 	// const colorSlate300 = TAILWIND_CONFIG.theme.colors.slate[300];
-
-	$effect(() => {
-		setReactTailwindcssDatepickerState(stubReactTailwindcssDatepickerStateProps());
-	});
 
 	//* Montly Active Users (in k)
 	const MONTLY_ACTIVE_USERS_IN_K = 'canvas-dashboard-montly-active-users-in-k-graph';
@@ -180,14 +176,6 @@
 	let startFrom = $state('2023-03-01');
 	let startWeekOn = $state('');
 
-	// const handleChange = (value, e: EventTarget) => {
-	// 	setValue(value);
-	// 	console.log(e);
-	// 	console.log('value', value);
-	// };
-
-	// let { dateLooking } = getReactTailwindcssDatepickerState();
-
 	pageTitleState.pageTitle = 'Dashboard';
 
 	function handleChange(valueArg: DateValueType, e?: HTMLInputElement | null | undefined): void {
@@ -201,7 +189,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 	<div class="">
 		<div class="w-72">
-			<span class="text-warning text-2xl">Calendar Component</span>
+			<!-- <span class="text-warning text-2xl">Calendar Component</span> -->
 			<Datepicker
 				{value}
 				{primaryColor}

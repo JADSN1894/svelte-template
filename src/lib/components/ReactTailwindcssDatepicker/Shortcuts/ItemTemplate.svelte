@@ -5,7 +5,7 @@
 	// import type { DatepickerContext } from '../contexts/DatepickerContext';
 	import { TAILWIND_CONFIG } from '$lib/utils/tailwind';
 	import { TEXT_COLOR } from '../constants';
-	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
+	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState.svelte';
 
 	type ItemTemplateProps = {
 		children?: Snippet;

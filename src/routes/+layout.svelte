@@ -38,6 +38,13 @@
 	//* Svelte
 	import { page } from '$app/stores';
 
+	import {
+		getReactTailwindcssDatepickerState,
+		setReactTailwindcssDatepickerState
+	} from '$lib/components/ReactTailwindcssDatepicker/ReactTailwindcssDatepickerState.svelte';
+
+	let reactTailwindcssDatepickerState = setReactTailwindcssDatepickerState();
+
 	function closeSideBar() {
 		const element = document.getElementById('left-sidebar-drawer') as HTMLButtonElement;
 		element.click();

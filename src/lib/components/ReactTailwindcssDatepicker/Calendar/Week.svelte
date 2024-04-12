@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
+	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState.svelte';
 
 	import dayjs from 'dayjs';
 	// import React, { useContext, useMemo } from 'react';

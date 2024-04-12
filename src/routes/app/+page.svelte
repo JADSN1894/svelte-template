@@ -1,3 +1,9 @@
-<script lang="ts"></script>
+<script lang="ts">
+	import { getReactTailwindcssDatepickerState } from '$root/src/lib/components/ReactTailwindcssDatepicker/ReactTailwindcssDatepickerState.svelte';
 
-<div class="w-full h-full flex items-center justify-center">Unknown</div>
+	let { classNames } = getReactTailwindcssDatepickerState();
+</script>
+
+<div class="w-full h-full flex items-center justify-center">
+	{classNames}
+</div>

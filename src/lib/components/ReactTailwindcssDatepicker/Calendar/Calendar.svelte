@@ -30,7 +30,7 @@
 	import type { DateType } from '../types';
 	import RoundedButton from '../utils/RoundedButton.svelte';
 
-	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
+	import { getReactTailwindcssDatepickerState } from '$root/src/lib/components/ReactTailwindcssDatepicker/ReactTailwindcssDatepickerState.svelte';
 
 	interface Props {
 		date: Dayjs;

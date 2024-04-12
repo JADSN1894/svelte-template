@@ -13,11 +13,11 @@
 	import VerticalDash from './utils/VerticalDash.svelte';
 	import Shortcuts from './Shortcuts/Shortcuts.svelte';
 
-	import { type ReactTailwindcssDatepickerStateProps } from '$lib/components/ReactTailwindcssDatepicker/ReactTailwindcssDatepickerState.ts';
+	import { type ReactTailwindcssDatepickerStateProps } from '$root/src/lib/components/ReactTailwindcssDatepicker/ReactTailwindcssDatepickerState.svelte';
 	import { setContext } from 'svelte';
 	// import { stub } from './contexts/DatepickerContext';
 
-	const {
+	let {
 		primaryColor = 'blue',
 		value = null,
 		onChange,
@@ -228,80 +228,6 @@
 		}
 		return DEFAULT_COLOR;
 	});
-
-	// const contextValues = useMemo(() => {
-	//     return {
-	//         asSingle,
-	//         primaryColor: safePrimaryColor,
-	//         configs,
-	//         calendarContainer: calendarContainerRef,
-	//         arrowContainer: arrowRef,
-	//         hideDatepicker,
-	//         period,
-	//         changePeriod: (newPeriod: Period) => setPeriod(newPeriod),
-	//         dayHover,
-	//         changeDayHover: (newDay: string | null) => setDayHover(newDay),
-	//         inputText,
-	//         changeInputText: (newText: string) => setInputText(newText),
-	//         updateFirstDate: (newDate: dayjs.Dayjs) => firstGotoDate(newDate),
-	//         changeDatepickerValue: onChange,
-	//         showFooter,
-	//         placeholder,
-	//         separator,
-	//         i18n,
-	//         value,
-	//         disabled,
-	//         inputClassName,
-	//         containerClassName,
-	//         toggleClassName,
-	//         toggleIcon,
-	//         readOnly,
-	//         displayFormat,
-	//         minDate,
-	//         maxDate,
-	//         dateLooking,
-	//         disabledDates,
-	//         inputId,
-	//         inputName,
-	//         startWeekOn,
-	//         classNames,
-	//         onChange,
-	//         input: inputRef,
-	//         popoverDirection
-	//     };
-	// }, [
-	//     asSingle,
-	//     safePrimaryColor,
-	//     configs,
-	//     hideDatepicker,
-	//     period,
-	//     dayHover,
-	//     inputText,
-	//     onChange,
-	//     showFooter,
-	//     placeholder,
-	//     separator,
-	//     i18n,
-	//     value,
-	//     disabled,
-	//     inputClassName,
-	//     containerClassName,
-	//     toggleClassName,
-	//     toggleIcon,
-	//     readOnly,
-	//     displayFormat,
-	//     minDate,
-	//     maxDate,
-	//     dateLooking,
-	//     disabledDates,
-	//     inputId,
-	//     inputName,
-	//     startWeekOn,
-	//     classNames,
-	//     inputRef,
-	//     popoverDirection,
-	//     firstGotoDate
-	// ]);
 
 	const containerClassNameOverload = $state(() => {
 		const defaultContainerClassName = 'relative w-full text-gray-700';

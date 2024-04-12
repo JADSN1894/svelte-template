@@ -7,7 +7,7 @@
 	// import { loadLanguageModule } from '../../helpers';
 	// import { RoundedButton } from '../utils';
 
-	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
+	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState.svelte';
 	import { loadLanguageModule } from '../helpers';
 	import RoundedButton from '../utils/RoundedButton.svelte';
 

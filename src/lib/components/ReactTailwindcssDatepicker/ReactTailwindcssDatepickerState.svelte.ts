@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import type { ClassNamesTypeProp, ColorKeys, Configs, DateLookingDatepickerType, DateRangeType, DateType, DateValueType, Period, PopoverDirectionType } from "./types";
 import { getContext, setContext, type Snippet } from "svelte";
 import { DATE_FORMAT, LANGUAGE, START_WEEK } from "./constants";
@@ -75,12 +75,12 @@ class ReactTailwindcssDatepickerState {
     toggleClassName = $state<((className: string) => string) | string | null>('');
     displayFormat = $state('YYYY-MM-DD');
     readOnly = $state(false);
-    minDate = $state<DateType | null>(new Dayjs(new Date()).toDate());
-    maxDate = $state<DateType | null>(new Dayjs(new Date()).add(1, 'year').toDate());
+    minDate = $state<DateType | null>(dayjs(new Date()).toDate());
+    maxDate = $state<DateType | null>(dayjs(new Date()).add(1, 'year').toDate());
     dateLooking = $state<DateLookingDatepickerType>('forward');
     disabledDates = $state<DateRangeType[] | null>([]);
     dayHover = $state<string | null>(null);
-    startFrom = $state<Date | null>(new Dayjs(new Date()).toDate());
+    startFrom = $state<Date | null>(dayjs(new Date()).toDate());
     startWeekOn = $state<string | null>('');
     inputId? = $state<string>("");
     inputName? = $state<string>("");
@@ -121,12 +121,12 @@ class ReactTailwindcssDatepickerState {
         this.toggleClassName = initialValue.toggleClassName || null;
         this.displayFormat = initialValue.displayFormat;
         this.readOnly = initialValue.readOnly || false;;
-        this.minDate = initialValue.minDate || new Dayjs(new Date()).toDate();
-        this.maxDate = initialValue.maxDate || new Dayjs(new Date()).add(1, 'year').toDate();
+        this.minDate = initialValue.minDate || dayjs(new Date()).toDate();
+        this.maxDate = initialValue.maxDate || dayjs(new Date()).add(1, 'year').toDate();
         this.dateLooking = initialValue.dateLooking || 'forward';
         this.disabledDates = initialValue.disabledDates || null;
         this.dayHover = initialValue.dayHover;
-        this.startFrom = initialValue.startFrom || new Dayjs(new Date()).toDate();
+        this.startFrom = initialValue.startFrom || dayjs(new Date()).toDate();
         this.startWeekOn = initialValue.startWeekOn || null;
         this.inputId = initialValue.inputId;
         this.inputName = initialValue.inputName;
@@ -162,7 +162,7 @@ export function stubReactTailwindcssDatepickerStateProps() {
         changeDayHover: (day: string | null) => { },
         inputText: "",
         changeInputText: (text: string) => { },
-        updateFirstDate: (date: Dayjs) => { },
+        updateFirstDate: (date: dayjs.Dayjs) => { },
         changeDatepickerValue: (value: DateValueType, e: HTMLInputElement | null | undefined) => { },
         showFooter: false,
         value: null,
@@ -178,7 +178,7 @@ export function stubReactTailwindcssDatepickerStateProps() {
         dateLooking: "forward",
         disabledDates: null,
         inputId: undefined,
-        inputName: undefined,
+        inputName: "",
         startWeekOn: START_WEEK,
         toggleIcon: undefined,
         classNames: undefined,
@@ -189,11 +189,11 @@ export function stubReactTailwindcssDatepickerStateProps() {
 
 export const REACT_TAILWIND_CSS_DATEPICKER_CTX = 'REACT_TAILWIND_CSS_DATEPICKER_CTX'
 
-export function setReactTailwindcssDatepickerState(initialValue: ReactTailwindcssDatepickerStateProps) {
+export function setReactTailwindcssDatepickerState() {
     console.log("setReactTailwindcssDatepickerState");
-    console.log(initialValue);
+    // console.log(initialValue);
 
-    const contextState = new ReactTailwindcssDatepickerState(initialValue);
+    const contextState = new ReactTailwindcssDatepickerState(stubReactTailwindcssDatepickerStateProps());
     setContext(REACT_TAILWIND_CSS_DATEPICKER_CTX, contextState)
     return contextState
 }

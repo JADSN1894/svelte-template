@@ -16,6 +16,7 @@ Svelte template
 ## Helpers
 
 1. [**REACT HOOKS IN SVELTE**](https://react-hooks-in-svelte.vercel.app/useCallback)
+1. [**Migrating from React Context to Svelte**](https://stackoverflow.com/questions/67663671/understanding-context-in-svelte-convert-from-react-context)
 
 ## Disclaimer
 

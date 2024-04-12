@@ -2,7 +2,7 @@
 	import dayjs from 'dayjs';
 	import DEFAULT_SHORTCUTS from '../constants/shortcuts';
 
-	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
+	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState.svelte';
 	import type { ShortcutsItem } from '../types';
 	import { DATE_FORMAT } from '../constants';
 

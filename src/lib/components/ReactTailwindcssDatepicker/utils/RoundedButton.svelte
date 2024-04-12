@@ -26,7 +26,7 @@
 	}: Props & HTMLButtonAttributes = $props();
 
 	// let purplePrimaryColor = TAILWIND_CONFIG.theme.colors.purple[500];
-	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
+	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState.svelte';
 
 	const { primaryColor } = getReactTailwindcssDatepickerState();
 

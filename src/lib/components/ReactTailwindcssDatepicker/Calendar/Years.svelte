@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState';
+	import { getReactTailwindcssDatepickerState } from '../ReactTailwindcssDatepickerState.svelte';
 
 	import { generateArrayNumber } from '../helpers';
 	import RoundedButton from '../utils/RoundedButton.svelte';

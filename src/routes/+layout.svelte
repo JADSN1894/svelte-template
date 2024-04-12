@@ -54,6 +54,8 @@
 	const lightThemeName = Object.keys(theme[0]).at(0)?.toString();
 	// const darkThemeName = Object.keys(theme[1]).at(0)?.toString();
 
+	$inspect(currentRouterName);
+
 	$effect(() => {
 		currentRouterName = $page.url.pathname.slice(1);
 	});
@@ -175,7 +177,7 @@
 							/>
 						</button>
 
-						<div hidden={isPageMenuExpanded} class="w-full">
+						<div hidden={!isPageMenuExpanded} class="w-full">
 							<ul class="menu menu-compact">
 								<li>
 									<a href="/login"> <ArrowRightStartOnRectangleIcon class="h-5 w-5" />Login</a>
@@ -215,7 +217,7 @@
 								class={`w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all ${isSettingsMenuExpanded ? 'rotate-180' : ''}`}
 							/>
 						</button>
-						<div hidden={isSettingsMenuExpanded} class=" w-full">
+						<div hidden={!isSettingsMenuExpanded} class=" w-full">
 							<ul class="menu menu-compact">
 								<li>
 									<a href="/app/settings-profile"><UserIcon class="h-5 w-5" />Profile</a>
@@ -245,7 +247,7 @@
 								class={`w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all ${isDocumentationMenuExpanded ? 'rotate-180' : ''}`}
 							/>
 						</button>
-						<div hidden={isDocumentationMenuExpanded} class=" w-full">
+						<div hidden={!isDocumentationMenuExpanded} class=" w-full">
 							<ul class="menu menu-compact">
 								<li>
 									<a href="/app/getting-started">

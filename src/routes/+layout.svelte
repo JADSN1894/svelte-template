@@ -57,7 +57,7 @@
 	$inspect(currentRouterName);
 
 	$effect(() => {
-		currentRouterName = $page.url.pathname.slice(1);
+		currentRouterName = $page.url.pathname.slice(1).trim();
 	});
 </script>
 
@@ -133,33 +133,69 @@
 					<a class="font-normal" href="/app/dashboard">
 						<Squares2x2Icon class="h-5 w-5" />
 						Dashboard
+						{#if currentRouterName === 'app/dashboard'}
+							<span
+								class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+								aria-hidden="true"
+							/>
+						{/if}
 					</a>
 				</li>
 				<li>
 					<a class="font-normal" href="/app/leads">
 						<InboxArrowDownIcon class="w-5 h-5" />
 						Leads
+						{#if currentRouterName === 'app/leads'}
+							<span
+								class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+								aria-hidden="true"
+							/>
+						{/if}
 					</a>
 				</li>
 				<li>
 					<a class="font-normal" href="/app/transactions">
 						<CurrencyDollarIcon class="w-5 h-5" />
 						Transactions
+						{#if currentRouterName === 'app/transactions'}
+							<span
+								class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+								aria-hidden="true"
+							/>
+						{/if}
 					</a>
 				</li>
 				<li>
 					<a class="font-normal" href="/app/charts">
 						<ChartBarIcon class="w-5 h-5"></ChartBarIcon>Analytics
+						{#if currentRouterName === 'app/charts'}
+							<span
+								class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+								aria-hidden="true"
+							/>
+						{/if}
 					</a>
 				</li>
 				<li>
 					<a class="font-normal" href="/app/integration">
 						<BoltIcon class="h-5 w-5 inline-block" />Integration
+						{#if currentRouterName === 'app/integration'}
+							<span
+								class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+								aria-hidden="true"
+							/>
+						{/if}
 					</a>
 				</li>
 				<li>
 					<a class="font-normal" href="/app/calendar">
 						<CalendarDaysIcon class="w-5 h-5" />Calendar
+						{#if currentRouterName === 'app/calendar'}
+							<span
+								class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+								aria-hidden="true"
+							/>
+						{/if}
 					</a>
 				</li>
 				<li>
@@ -177,7 +213,7 @@
 							/>
 						</button>
 
-						<div hidden={!isPageMenuExpanded} class="w-full">
+						<div hidden={isPageMenuExpanded} class="w-full">
 							<ul class="menu menu-compact">
 								<li>
 									<a href="/login"> <ArrowRightStartOnRectangleIcon class="h-5 w-5" />Login</a>
@@ -217,16 +253,43 @@
 								class={`w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all ${isSettingsMenuExpanded ? 'rotate-180' : ''}`}
 							/>
 						</button>
-						<div hidden={!isSettingsMenuExpanded} class=" w-full">
+						<div hidden={isSettingsMenuExpanded} class=" w-full">
 							<ul class="menu menu-compact">
 								<li>
-									<a href="/app/settings-profile"><UserIcon class="h-5 w-5" />Profile</a>
+									<a href="/app/settings-profile">
+										<UserIcon class="h-5 w-5" />
+										Profile
+										{#if currentRouterName === 'app/settings-profile'}
+											<span
+												class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+												aria-hidden="true"
+											/>
+										{/if}
+									</a>
 								</li>
 								<li>
-									<a href="/app/settings-billing"><WalletIcon class="h-5 w-5" />Billing</a>
+									<a href="/app/settings-billing">
+										<WalletIcon class="h-5 w-5" />
+										Billing
+										{#if currentRouterName === 'app/settings-billing'}
+											<span
+												class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+												aria-hidden="true"
+											/>
+										{/if}
+									</a>
 								</li>
 								<li>
-									<a href="/app/settings-team"><UsersIcon class="h-5 w-5" />Team Members</a>
+									<a href="/app/settings-team">
+										<UsersIcon class="h-5 w-5" />
+										Team Members
+										{#if currentRouterName === 'app/settings-team'}
+											<span
+												class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+												aria-hidden="true"
+											/>
+										{/if}
+									</a>
 								</li>
 							</ul>
 						</div>
@@ -247,18 +310,44 @@
 								class={`w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all ${isDocumentationMenuExpanded ? 'rotate-180' : ''}`}
 							/>
 						</button>
-						<div hidden={!isDocumentationMenuExpanded} class=" w-full">
+						<div hidden={isDocumentationMenuExpanded} class=" w-full">
 							<ul class="menu menu-compact">
 								<li>
 									<a href="/app/getting-started">
-										<DocumentTextIcon class="w-5 h-5 inline" />Getting Started
+										<DocumentTextIcon class="w-5 h-5 inline" />
+										Getting Started
+										{#if currentRouterName === 'app/getting-started'}
+											<span
+												class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+												aria-hidden="true"
+											/>
+										{/if}
 									</a>
 								</li>
 								<li>
-									<a href="/app/features"><TableCellsIcon class="h-5 w-5" />Features</a>
+									<a href="/app/features"
+										><TableCellsIcon class="h-5 w-5" />
+										Features
+										{#if currentRouterName === 'app/features'}
+											<span
+												class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+												aria-hidden="true"
+											/>
+										{/if}
+									</a>
 								</li>
 								<li>
-									<a href="/app/components"><CodeBracketSquareIcon class="h-5 w-5" />Components</a>
+									<a href="/app/components"
+										><CodeBracketSquareIcon class="h-5 w-5" />
+										Components
+
+										{#if currentRouterName === 'app/components'}
+											<span
+												class="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+												aria-hidden="true"
+											/>
+										{/if}
+									</a>
 								</li>
 							</ul>
 						</div>
